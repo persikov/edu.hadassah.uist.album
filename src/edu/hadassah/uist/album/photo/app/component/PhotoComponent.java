@@ -1,7 +1,9 @@
 package edu.hadassah.uist.album.photo.app.component;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
+import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -25,7 +27,8 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 	protected PhotoModel photo;
 	protected DoubleClickListener dblClickListener;
 //	protected DrawPad drawPad;
-	int currentX, currentY, oldX, oldY;
+	protected int currentX, currentY, oldX, oldY;
+	protected final Canvas canvas;
 
 
 //	protected Graphics2D graphics2d;
@@ -39,12 +42,15 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 		//### isOptimizedDrawingEnabled
 
 		photo = new PhotoModel(file);
+		canvas = new Canvas();
+		this.add(canvas, BorderLayout.CENTER);
+		canvas.setVisible(false);
 
 
 //		photo.addActionListener(dblClickListener);
 //		drawPad = new DrawPad();//photo);
-//		drawPad.setVisible(false);
 //		this.add(drawPad, BorderLayout.CENTER);
+//		drawPad.setVisible(false);
 
 		addMouseListener(new MouseAdapter() {
 			@Override
@@ -65,7 +71,7 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 //				System.out.println("MouseMotionAdapter:mouseDragged");
 //			}
 //		});
-		addMouseListener(new MouseAdapter() {
+		canvas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 //				System.out.println("MouseMotionAdapter:mousePressed");
@@ -73,11 +79,11 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 				oldY = e.getY();
 			}
 		});
-		addMouseMotionListener(new MouseMotionAdapter() {
+		canvas.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseDragged(MouseEvent e) {
 //				System.out.println("MouseMotionAdapter:mouseDragged");
-				Graphics2D graphics2d = (Graphics2D)photo.getImage().getGraphics();
+				Graphics2D graphics2d = (Graphics2D)canvas.getGraphics();
 				graphics2d.setColor(Color.BLACK);
 				graphics2d.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 				currentX = e.getX();
@@ -109,6 +115,7 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 		photo.loadPhoto();
 //		drawPad.setHeight(photo.getImage().getHeight(this));
 //		drawPad.setWidth(photo.getImage().getWidth(this));
+		canvas.setPreferredSize(new Dimension(photo.getImage().getWidth(this), photo.getImage().getHeight(this)));
 	}
 
 	@Override
@@ -119,6 +126,7 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 		if (photo.flipped)
 		{
 
+			canvas.setVisible(true);
 //			drawPad.setVisible(true);
 			//			Graphics2D imageGraphics = (Graphics2D)photo.getImage().getGraphics();
 
@@ -130,6 +138,7 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 		}
 		else
 		{
+			canvas.setVisible(false);
 //			drawPad.setVisible(false);
 //			paintBackground(graphics2d, Color.orange);
 //			paintFrameImage(graphics2d);
