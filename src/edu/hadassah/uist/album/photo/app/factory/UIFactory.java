@@ -28,6 +28,7 @@ import edu.hadassah.uist.album.photo.app.listeners.ImportPhotoListener;
 import edu.hadassah.uist.album.photo.app.listeners.LigthFrameComponentListener;
 import edu.hadassah.uist.album.photo.app.listeners.NextPhotoListener;
 import edu.hadassah.uist.album.photo.app.listeners.StatusBarUpdater;
+import edu.hadassah.uist.album.photo.app.utils.MessagesUtils;
 import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 import edu.hadassah.uist.album.photo.model.factory.IUIFactory;
 
@@ -37,6 +38,24 @@ import edu.hadassah.uist.album.photo.model.factory.IUIFactory;
  *
  */
 public class UIFactory implements IUIFactory {
+
+	private static final String TAG_WORK = "album.ui.main.window.tag.work";
+	private static final String TAG_SCHOOL = "album.ui.main.window.tag.school";
+	private static final String TAG_FAMILY = "album.ui.main.window.tag.family";
+	private static final String TAG_VACATION = "album.ui.main.window.tag.vacation";
+	private static final String NAVIGATION_BTN_FORWARD = "album.ui.main.window.navigation.btn.forward";
+	private static final String NAVIGATION_BTN_BACK = "album.ui.main.window.navigation.btn.back";
+	private static final String STATUS_BAR_LABEL = "album.ui.main.window.status.bar.label";
+	private static final String TOOL_FRAME_TITLE = "album.ui.main.window.tool.frame.title";
+	private static final String MAIN_FRAME_TITLE = "album.ui.main.window.main.frame.title";
+	private static final String MENU_TITLE_EXIT = "album.ui.main.window.menu.title.exit";
+	private static final String MENU_TITLE_DELETE_PHOTO = "album.ui.main.window.menu.title.delete.photo";
+	private static final String MENU_TITLE_IMPORT_PHOTO_FOLDER = "album.ui.main.window.menu.title.import.photo.folder";
+	private static final String TITLE_IMPORT_PHOTO = "album.ui.main.window.menu.title.import.photo";
+	private static final String MENU_TITLE_FILE = "album.ui.main.window.menu.title.file";
+	private static final String MENU_TITLE_VIEW = "album.ui.main.window.menu.title.view";
+	private static final String MENU_TITLE_TOOL_FRAME_SHOW = "album.ui.main.window.menu.title.tool.frame.show";
+
 
 	final IPhotoAlbumController mediator;
 	private StatusBarUpdater statusUpdaterListener = null;
@@ -70,18 +89,18 @@ public class UIFactory implements IUIFactory {
 	 */
 	@Override
 	public JMenu createFileMenu() {
-		JMenu fileMenu = new JMenu("File");
+		JMenu fileMenu = new JMenu(MessagesUtils.getString(MENU_TITLE_FILE));
 		JMenuItem menuItem;
 
-		menuItem = new JMenuItem("Import Photo");
+		menuItem = new JMenuItem(MessagesUtils.getString(TITLE_IMPORT_PHOTO));
 		menuItem.addActionListener(new ImportPhotoListener(mediator));
 		fileMenu.add(menuItem);
 
-		menuItem = new JMenuItem("Import Photos from Folder");
+		menuItem = new JMenuItem(MessagesUtils.getString(MENU_TITLE_IMPORT_PHOTO_FOLDER));
 		menuItem.addActionListener(new ImportFolderPhotoListener(mediator));
 		fileMenu.add(menuItem);
 
-		menuItem = new JMenuItem("Delete Photo");
+		menuItem = new JMenuItem(MessagesUtils.getString(MENU_TITLE_DELETE_PHOTO));
 		menuItem.addActionListener(new ActionListener() {
 
 			@Override
@@ -92,7 +111,7 @@ public class UIFactory implements IUIFactory {
 		});
 		fileMenu.add(menuItem);
 
-		menuItem = new JMenuItem(new AbstractAction("Exit") {
+		menuItem = new JMenuItem(new AbstractAction(MessagesUtils.getString(MENU_TITLE_EXIT)) {
 
 			@Override
 			public void actionPerformed(final ActionEvent e) {
@@ -110,7 +129,7 @@ public class UIFactory implements IUIFactory {
 	 */
 	@Override
 	public JFrame createMainFrame() {
-		JFrame frame = new JFrame("PhotoAlbum");
+		JFrame frame = new JFrame(MessagesUtils.getString(MAIN_FRAME_TITLE));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setPreferredSize(new Dimension(800, 600));
 		return frame;
@@ -139,15 +158,15 @@ public class UIFactory implements IUIFactory {
 
 		greenMenuBar.add(createFileMenu());
 
-		JFrame frame = new JFrame("Ligth tool");
+		JFrame frame = new JFrame(MessagesUtils.getString(TOOL_FRAME_TITLE));
 		frame.setPreferredSize(new Dimension(300, 400));
 		frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 		frame.setVisible(false);
 		frame.pack();
 
 
-		JMenu viewMenu = new JMenu("View");
-		final JMenuItem menuItem = new JMenuItem(new ComponentVisibilityToggleAction("Show Light Table", frame));
+		JMenu viewMenu = new JMenu(MessagesUtils.getString(MENU_TITLE_VIEW));
+		final JMenuItem menuItem = new JMenuItem(new ComponentVisibilityToggleAction(MessagesUtils.getString(MENU_TITLE_TOOL_FRAME_SHOW), frame));
 		viewMenu.add(menuItem);
 		greenMenuBar.add(viewMenu);
 
@@ -159,7 +178,7 @@ public class UIFactory implements IUIFactory {
 	 */
 	@Override
 	public JLabel createStatusBar() {
-		return new JLabel("Status messages");
+		return new JLabel(MessagesUtils.getString(STATUS_BAR_LABEL));
 	}
 
 	/**
@@ -176,12 +195,12 @@ public class UIFactory implements IUIFactory {
 
 		JPanel pageControlPanel = new JPanel(new GridLayout(1, 2, 2, 2));
 		toolsPanel.add(pageControlPanel, BorderLayout.SOUTH);
-		JButton bBack = new JButton("Back");
+		JButton bBack = new JButton(MessagesUtils.getString(NAVIGATION_BTN_BACK));
 		bBack.addActionListener(statusUpdaterListener);
 		bBack.addActionListener(new NextPhotoListener(mediator, false));
 		pageControlPanel.add(bBack);
 
-		JButton bForward = new JButton("Forward");
+		JButton bForward = new JButton(MessagesUtils.getString(NAVIGATION_BTN_FORWARD));
 		bForward.addActionListener(statusUpdaterListener);
 		bForward.addActionListener(new NextPhotoListener(mediator, true));
 		pageControlPanel.add(bForward);
@@ -189,19 +208,19 @@ public class UIFactory implements IUIFactory {
 		JPanel tagControlPanel = new JPanel(new GridLayout(3, 2, 2, 2));
 		toolsPanel.add(tagControlPanel, BorderLayout.NORTH);
 
-		JCheckBox bTagVacation = new JCheckBox("Vacation");
+		JCheckBox bTagVacation = new JCheckBox(MessagesUtils.getString(TAG_VACATION));
 		bTagVacation.addActionListener(statusUpdaterListener);
 		tagControlPanel.add(bTagVacation);
 
-		JCheckBox bTagFamily = new JCheckBox("Family");
+		JCheckBox bTagFamily = new JCheckBox(MessagesUtils.getString(TAG_FAMILY));
 		bTagFamily.addActionListener(statusUpdaterListener);
 		tagControlPanel.add(bTagFamily);
 
-		JCheckBox bTagSchool = new JCheckBox("School");
+		JCheckBox bTagSchool = new JCheckBox(MessagesUtils.getString(TAG_SCHOOL));
 		bTagSchool.addActionListener(statusUpdaterListener);
 		tagControlPanel.add(bTagSchool);
 
-		JCheckBox bTagWork = new JCheckBox("Work");
+		JCheckBox bTagWork = new JCheckBox(MessagesUtils.getString(TAG_WORK));
 		bTagWork.addActionListener(statusUpdaterListener);
 		tagControlPanel.add(bTagWork);
 

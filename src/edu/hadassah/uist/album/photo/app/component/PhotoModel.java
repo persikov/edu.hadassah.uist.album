@@ -28,7 +28,9 @@ public class PhotoModel {
 	 * @throws IOException void
 	 */
 	public void loadPhoto() throws IOException {
-		image = ImageIO.read(file);
+		if(file != null){
+			image = ImageIO.read(file);
+		}
 	}
 
 	public PhotoModel(File file, Vector<ActionListener> listeners) throws IOException

@@ -10,6 +10,7 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
 
+import edu.hadassah.uist.album.photo.app.utils.MessagesUtils;
 import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 
 /**
@@ -35,7 +36,7 @@ public abstract class AImportPhotoListener implements ActionListener, Runnable {
 	    if (returnVal == JFileChooser.APPROVE_OPTION) {
 	    	SwingUtilities.invokeLater(this);
 	    } else {
-	        mediator.setStatusMessage("Open command cancelled by user.");
+	        mediator.setStatusMessage(MessagesUtils.getString("album.ui.main.window.import.status.canceled")); //$NON-NLS-1$
 	    }
 
 	}
@@ -48,7 +49,7 @@ public abstract class AImportPhotoListener implements ActionListener, Runnable {
 		File file = fc.getSelectedFile();
 		mediator.addPhotoComponent(file);
 		//This is where a real application would open the file.
-		mediator.setStatusMessage("Photo from file " + file.getAbsolutePath() + " were loaded.");
+		mediator.setStatusMessage(MessagesUtils.getString("album.ui.main.window.import.status.successful.1") + file.getAbsolutePath() + MessagesUtils.getString("album.ui.main.window.import.status.successful.2")); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

@@ -9,6 +9,7 @@ import java.io.FilenameFilter;
 
 import javax.swing.JFileChooser;
 
+import edu.hadassah.uist.album.photo.app.utils.MessagesUtils;
 import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 
 /**
@@ -36,7 +37,7 @@ public class ImportFolderPhotoListener extends AImportPhotoListener {
 	 */
 	@Override
 	protected String getDialogTitle() {
-		return "Import Photo from Folder";
+		return MessagesUtils.getString("album.ui.main.window.dilaog.import.folder.title"); //$NON-NLS-1$
 	}
 
 	/**
@@ -49,7 +50,7 @@ public class ImportFolderPhotoListener extends AImportPhotoListener {
 		File[] listFiles = file.listFiles(filter);
         mediator.addPhotoComponents(listFiles);
         //This is where a real application would open the file.
-        mediator.setStatusMessage("Photo from file " + file.getAbsolutePath() + " were loaded.");
+        mediator.setStatusMessage(MessagesUtils.getString("album.ui.main.window.import.status.successful.1") + file.getAbsolutePath() + MessagesUtils.getString("album.ui.main.window.import.status.successful.2"));
 	}
 
 

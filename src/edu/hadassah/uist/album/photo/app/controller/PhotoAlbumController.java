@@ -11,6 +11,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 
 import edu.hadassah.uist.album.photo.app.factory.PhotoComponentFactory;
+import edu.hadassah.uist.album.photo.app.utils.MessagesUtils;
 import edu.hadassah.uist.album.photo.model.component.IPhotoComponent;
 import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 import edu.hadassah.uist.album.photo.model.data.IPhotoAlbumModel;
@@ -22,6 +23,10 @@ import edu.hadassah.uist.album.photo.model.data.IPhotoAlbumModel;
  */
 public class PhotoAlbumController implements IPhotoAlbumController {
 
+	/**
+	 *
+	 */
+	private static final String NOTHING_TO_SHOW = "album.ui.main.window.controller.nothing.to.show";
 	/** application status bar */
 	private JLabel statusBar;
 	private final IPhotoAlbumModel albumModel;
@@ -45,7 +50,7 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 			statusBar.setText(message);
 		} else {
 			// TODO use log here
-			System.err.println("Failed to update status. Status bar was not set to controller");
+			System.err.println("Failed to update status. Status bar was not set to controller"); //$NON-NLS-1$
 		}
 
 	}
@@ -66,7 +71,7 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 	public void showNextPhoto() {
 		IPhotoComponent nextPhotoComponents = albumModel.getNextPhotoComponents();
 		if ( nextPhotoComponents == null){
-			setStatusMessage("No photos to show");
+			setStatusMessage(MessagesUtils.getString(NOTHING_TO_SHOW));
 		} else {
 			contentPanel.removeAll();
 			contentPanel.add((JComponent)nextPhotoComponents);
@@ -84,7 +89,7 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 		//TODO should we remove prev component?
 		IPhotoComponent previousPhotoComponents = albumModel.getPreviousPhotoComponents();
 		if ( previousPhotoComponents == null){
-			setStatusMessage("No photos to show");
+			setStatusMessage(MessagesUtils.getString(NOTHING_TO_SHOW));
 		} else {
 			contentPanel.removeAll();
 			JComponent photoComponents = (JComponent)previousPhotoComponents;
@@ -124,7 +129,7 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 			contentPanel.removeAll();
 			contentPanel.add((JComponent)photoComponent);
 		} catch (IOException e) {
-			setStatusMessage("Fails to load photo from " + file.getAbsolutePath());
+			setStatusMessage("Fails to load photo from " + file.getAbsolutePath()); //$NON-NLS-1$
 		}
 
 	}
@@ -152,7 +157,7 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 				photoComponent = photoComponentFactory.createPhotoComponent(currFile);
 				albumModel.addPhotoComponent(photoComponent);
 			} catch (IOException e) {
-				setStatusMessage("Fails to load photo from " + currFile.getAbsolutePath());
+				setStatusMessage("Fails to load photo from " + currFile.getAbsolutePath()); //$NON-NLS-1$
 			}
 		}
 		if ( photoComponent != null){

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JFileChooser;
 
+import edu.hadassah.uist.album.photo.app.utils.MessagesUtils;
 import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 
 /**
@@ -31,7 +32,7 @@ public class ImportPhotoListener extends AImportPhotoListener  {
 	 */
 	@Override
 	protected String getDialogTitle() {
-		return "Import Photo";
+		return MessagesUtils.getString("album.ui.main.window.import.dialog.title0"); //$NON-NLS-1$
 	}
 
 }

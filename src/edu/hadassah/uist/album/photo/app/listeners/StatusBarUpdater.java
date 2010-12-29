@@ -2,6 +2,7 @@ package edu.hadassah.uist.album.photo.app.listeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import edu.hadassah.uist.album.photo.app.utils.MessagesUtils;
 import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 
 
@@ -30,7 +31,7 @@ public class StatusBarUpdater implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(final ActionEvent e) {
-		mediator.setStatusMessage(e.getActionCommand() + " control were activated");
+		mediator.setStatusMessage(e.getActionCommand() + MessagesUtils.getString("album.ui.main.window.status.activated")); //$NON-NLS-1$
 
 	}
 }

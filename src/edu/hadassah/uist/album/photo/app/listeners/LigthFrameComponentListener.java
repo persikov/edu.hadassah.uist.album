@@ -5,6 +5,8 @@ import java.awt.event.ComponentListener;
 
 import javax.swing.JMenuItem;
 
+import edu.hadassah.uist.album.photo.app.utils.MessagesUtils;
+
 /**
  * Listener for changing menu item label according to the component status
  * @author Sergey Persikov
@@ -27,7 +29,7 @@ ComponentListener {
 	 */
 	@Override
 	public void componentShown(final ComponentEvent e) {
-		menuItem.setText("Hide Light Table");
+		menuItem.setText(MessagesUtils.getString("album.ui.main.window.menu.title.tool.frame.hide")); //$NON-NLS-1$
 	}
 
 	/**
@@ -35,7 +37,7 @@ ComponentListener {
 	 */
 	@Override
 	public void componentHidden(final ComponentEvent e) {
-		menuItem.setText("Show Light Table");
+		menuItem.setText(MessagesUtils.getString("album.ui.main.window.menu.title.tool.frame.show")); //$NON-NLS-1$
 	}
 	/**
 	 * @see java.awt.event.ComponentListener#componentResized(java.awt.event.ComponentEvent)
