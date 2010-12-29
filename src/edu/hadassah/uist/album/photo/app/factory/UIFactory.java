@@ -13,13 +13,13 @@ import java.awt.event.ActionListener;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JToggleButton;
 import javax.swing.WindowConstants;
 
 import edu.hadassah.uist.album.photo.app.actions.ComponentVisibilityToggleAction;
@@ -168,7 +168,7 @@ public class UIFactory implements IUIFactory {
 	@Override
 	public JPanel createToolPanel() {
 		JPanel toolsPanel = new JPanel();
-		toolsPanel.setBackground(Color.GRAY);
+		//toolsPanel.setBackground(Color.GRAY);
 		toolsPanel.setPreferredSize(new Dimension(180, 500));
 		toolsPanel.setLayout(new BorderLayout());
 		//		toolsPanel.setLayout(new GridLayout(5, 2, 2, 2));
@@ -189,19 +189,19 @@ public class UIFactory implements IUIFactory {
 		JPanel tagControlPanel = new JPanel(new GridLayout(3, 2, 2, 2));
 		toolsPanel.add(tagControlPanel, BorderLayout.NORTH);
 
-		JToggleButton bTagVacation = new JToggleButton("Vacation");
+		JCheckBox bTagVacation = new JCheckBox("Vacation");
 		bTagVacation.addActionListener(statusUpdaterListener);
 		tagControlPanel.add(bTagVacation);
 
-		JToggleButton bTagFamily = new JToggleButton("Family");
+		JCheckBox bTagFamily = new JCheckBox("Family");
 		bTagFamily.addActionListener(statusUpdaterListener);
 		tagControlPanel.add(bTagFamily);
 
-		JToggleButton bTagSchool = new JToggleButton("School");
+		JCheckBox bTagSchool = new JCheckBox("School");
 		bTagSchool.addActionListener(statusUpdaterListener);
 		tagControlPanel.add(bTagSchool);
 
-		JToggleButton bTagWork = new JToggleButton("Work");
+		JCheckBox bTagWork = new JCheckBox("Work");
 		bTagWork.addActionListener(statusUpdaterListener);
 		tagControlPanel.add(bTagWork);
 

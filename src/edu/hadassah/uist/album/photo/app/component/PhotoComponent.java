@@ -1,13 +1,12 @@
 package edu.hadassah.uist.album.photo.app.component;
 import java.awt.BasicStroke;
-import java.awt.BorderLayout;
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
+import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -15,8 +14,6 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import edu.hadassah.uist.album.photo.model.component.IPhotoComponent;
@@ -24,11 +21,27 @@ import edu.hadassah.uist.album.photo.model.component.IPhotoComponent;
 
 public class PhotoComponent extends JPanel implements IPhotoComponent
 {
+	/**
+	 * @author Sergey Persikov
+	 *
+	 */
+	private final class MouseAdapterExtension extends MouseAdapter {
+		@Override
+		public void mouseClicked(MouseEvent e)
+		{
+			if (e.getClickCount() == 2) {
+				photo.flip();
+				repaint();
+			}
+		}
+	}
+
 	protected PhotoModel photo;
 	protected DoubleClickListener dblClickListener;
 //	protected DrawPad drawPad;
 	protected int currentX, currentY, oldX, oldY;
-	protected final Canvas canvas;
+	protected final JPanel canvas;
+	private final Remarks remarks = new Remarks();
 
 
 //	protected Graphics2D graphics2d;
@@ -39,44 +52,28 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 
 		setDoubleBuffered(true);
 		setOpaque(true);
+		setLayout(new FlowLayout(FlowLayout.LEFT, 20, 20));
+		setOpaque(true);
 		//### isOptimizedDrawingEnabled
 
 		photo = new PhotoModel(file);
-		canvas = new Canvas();
-		this.add(canvas, BorderLayout.CENTER);
+		canvas = new JPanel();
+		this.add(canvas);
 		canvas.setVisible(false);
+		canvas.setBackground(Color.LIGHT_GRAY);
+		canvas.setDoubleBuffered(false);
 
-
-//		photo.addActionListener(dblClickListener);
-//		drawPad = new DrawPad();//photo);
-//		this.add(drawPad, BorderLayout.CENTER);
-//		drawPad.setVisible(false);
-
-		addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e)
-			{
-				if (e.getClickCount() == 2) {
-					photo.flip();
-					repaint();
-				}
-			}
-//			@Override
-//			public void mousePressed(MouseEvent e) {
-//			}
-		});
-//		addMouseMotionListener(new MouseMotionAdapter() {
-//			@Override
-//			public void mouseDragged(MouseEvent e) {
-//				System.out.println("MouseMotionAdapter:mouseDragged");
-//			}
-//		});
+		MouseAdapterExtension doubleClickListener = new MouseAdapterExtension();
+		addMouseListener(doubleClickListener);
+		canvas.addMouseListener(doubleClickListener);
 		canvas.addMouseListener(new MouseAdapter() {
+
 			@Override
 			public void mousePressed(MouseEvent e) {
 //				System.out.println("MouseMotionAdapter:mousePressed");
 				oldX = e.getX();
 				oldY = e.getY();
+				remarks.startNew(oldX, oldY);
 			}
 		});
 		canvas.addMouseMotionListener(new MouseMotionAdapter() {
@@ -90,66 +87,52 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 				currentY = e.getY();
 				graphics2d.drawLine(oldX, oldY, currentX, currentY);
 				graphics2d.dispose();
-				repaint();
 				oldX = currentX;
 				oldY = currentY;
+				remarks.addPoint(currentX, currentY);
 			}
 		});
 	}
-//	public class DoubleClickListener implements ActionListener
-//	{
-//		JComponent component;
-//
-//		public DoubleClickListener(JComponent component)
-//		{
-//			this.component = component;
-//		}
-//
-//		@Override
-//		public void actionPerformed(ActionEvent e) {
-//			component.repaint();
-//		}
-//	}
 
 	public void loadPhoto() throws IOException{
 		photo.loadPhoto();
-//		drawPad.setHeight(photo.getImage().getHeight(this));
-//		drawPad.setWidth(photo.getImage().getWidth(this));
 		canvas.setPreferredSize(new Dimension(photo.getImage().getWidth(this), photo.getImage().getHeight(this)));
 	}
 
+	/**
+	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+	 */
 	@Override
 	protected void paintComponent(Graphics g)
 	{
-		Graphics2D graphics2d = (Graphics2D) g;
-		graphics2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		if (photo.flipped)
-		{
-
+		super.paintComponent(g);
+		if (photo.flipped){
+			Graphics2D graphics2d = (Graphics2D) canvas.getGraphics();
+			paintRemarks(graphics2d);
 			canvas.setVisible(true);
-//			drawPad.setVisible(true);
-			//			Graphics2D imageGraphics = (Graphics2D)photo.getImage().getGraphics();
-
-			graphics2d.setPaint(Color.LIGHT_GRAY);
-			graphics2d.fillRect(20, 20 , photo.getImage().getWidth(this), photo.getImage().getHeight(this) );
-
-			//			paintBackground(graphics2d, Color.white);
-			paintRemarks();
 		}
-		else
-		{
+		else{
 			canvas.setVisible(false);
-//			drawPad.setVisible(false);
-//			paintBackground(graphics2d, Color.orange);
-//			paintFrameImage(graphics2d);
-			graphics2d.drawImage(photo.getImage(), 20, 20, null);
-
-//			drawPad.setVisible(false);
+			Graphics2D graphics2d = (Graphics2D) g;
+			graphics2d.drawImage(photo.getImage(), 20, 20, this);
 		}
 	}
 
-	private void paintRemarks() {
-		// TODO Auto-generated method stub
+	private void paintRemarks(Graphics2D g) {
+		Point oldPoint = null;
+
+		g.setColor(Color.BLACK);
+		g.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+		for (Remark currRemark : remarks.getAllRemarks()) {
+			oldPoint = currRemark.getStartPoint();
+
+			for (Point currPoint : currRemark.getPoints()) {
+				if (! oldPoint.equals(currPoint) ){
+					g.drawLine(oldPoint.x, oldPoint.y, currPoint.x, currPoint.y);
+					oldPoint = currPoint;
+				}
+			}
+		}
 	}
 
 	protected void paintBackground(Graphics2D g, Color color)
@@ -170,23 +153,5 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 			e.printStackTrace();
 		}
 	}
-
-	public static void main(String[] args) throws IOException {
-	    JFrame frame = new JFrame();
-	    File file = new File(pictureFrame);
-	    final PhotoComponent drawPad = new PhotoComponent(file);
-	    frame.add(drawPad, BorderLayout.CENTER);
-	    JButton clearButton = new JButton("Clear");
-//	    clearButton.addActionListener(new ActionListener() {
-//	      public void actionPerformed(ActionEvent e) {
-//	        drawPad.paintBackground();
-//	      }
-//	    });
-	    frame.add(clearButton, BorderLayout.SOUTH);
-	    frame.setSize(700, 280);
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.setVisible(true);
-	  }
-
 
 }
