@@ -38,10 +38,9 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 
 	protected PhotoModel photo;
 	protected DoubleClickListener dblClickListener;
-//	protected DrawPad drawPad;
 	protected int currentX, currentY, oldX, oldY;
 	protected final JPanel canvas;
-	private final Remarks remarks = new Remarks();
+	private Color currColor = Color.BLACK;
 
 
 //	protected Graphics2D graphics2d;
@@ -73,7 +72,14 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 //				System.out.println("MouseMotionAdapter:mousePressed");
 				oldX = e.getX();
 				oldY = e.getY();
-				remarks.startNew(oldX, oldY);
+				Graphics2D graphics2d = (Graphics2D)canvas.getGraphics();
+				graphics2d.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+				if (e.getButton() == MouseEvent.BUTTON3){
+					currColor=Color.RED;
+				} else {
+					photo.startNewRemark(oldX, oldY);
+					currColor=Color.BLACK;
+				}
 			}
 		});
 		canvas.addMouseMotionListener(new MouseMotionAdapter() {
@@ -81,15 +87,17 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 			public void mouseDragged(MouseEvent e) {
 //				System.out.println("MouseMotionAdapter:mouseDragged");
 				Graphics2D graphics2d = (Graphics2D)canvas.getGraphics();
-				graphics2d.setColor(Color.BLACK);
+				graphics2d.setColor(currColor);
 				graphics2d.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 				currentX = e.getX();
 				currentY = e.getY();
 				graphics2d.drawLine(oldX, oldY, currentX, currentY);
-				graphics2d.dispose();
+//				graphics2d.dispose();
 				oldX = currentX;
 				oldY = currentY;
-				remarks.addPoint(currentX, currentY);
+				if (e.getButton() == MouseEvent.BUTTON1){
+					photo.addRemarkPoint(currentX, currentY);
+				}
 			}
 		});
 	}
@@ -123,7 +131,7 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 
 		g.setColor(Color.BLACK);
 		g.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-		for (Remark currRemark : remarks.getAllRemarks()) {
+		for (Remark currRemark : photo.getAllRemarks()) {
 			oldPoint = currRemark.getStartPoint();
 
 			for (Point currPoint : currRemark.getPoints()) {

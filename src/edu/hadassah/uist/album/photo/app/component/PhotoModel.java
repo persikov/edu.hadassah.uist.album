@@ -1,9 +1,9 @@
 package edu.hadassah.uist.album.photo.app.component;
 import java.awt.Image;
 import java.awt.event.ActionListener;
-import java.awt.geom.GeneralPath;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
@@ -15,7 +15,7 @@ public class PhotoModel {
 
 	protected Vector<ActionListener> listeners;
 	private final File file;
-	protected Vector<GeneralPath> remarkStrokes;
+	private final Remarks remarks = new Remarks();
 
 	public PhotoModel(File file)
 	{
@@ -74,13 +74,21 @@ public class PhotoModel {
 		}
 	}
 
-	public void addRemark(GeneralPath stroke)
+
+	public Remarks getRemarks()
 	{
-		remarkStrokes.add(stroke);
+		return remarks;
 	}
 
-	public Vector<GeneralPath> getRemarks()
-	{
-		return remarkStrokes;
+	public void startNewRemark(int x, int y) {
+		remarks.startNew(x, y);
+	}
+
+	public void addRemarkPoint(int x, int y) {
+		remarks.addPoint(x, y);
+	}
+
+	public Collection<Remark> getAllRemarks() {
+		return remarks.getAllRemarks();
 	}
 }
