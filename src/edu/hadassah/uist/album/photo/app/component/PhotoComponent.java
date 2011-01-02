@@ -12,10 +12,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import edu.hadassah.uist.album.photo.app.utils.MouseGesturesRecognizer;
 import edu.hadassah.uist.album.photo.model.component.IPhotoComponent;
 
 
@@ -41,7 +43,9 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 	protected int currentX, currentY, oldX, oldY;
 	protected final JPanel canvas;
 	private Color currColor = Color.BLACK;
+	private final MouseGesturesRecognizer gesturesRecognizer = new MouseGesturesRecognizer();
 
+	private final Pattern pattern = Pattern.compile("R+[LD]+R+");
 
 //	protected Graphics2D graphics2d;
 
@@ -59,14 +63,17 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 		canvas = new JPanel();
 		this.add(canvas);
 		canvas.setVisible(false);
-		canvas.setBackground(Color.LIGHT_GRAY);
-		canvas.setDoubleBuffered(false);
+		canvas.setBackground(Color.GREEN);
+		canvas.setDoubleBuffered(true);
 
 		MouseAdapterExtension doubleClickListener = new MouseAdapterExtension();
 		addMouseListener(doubleClickListener);
 		canvas.addMouseListener(doubleClickListener);
 		canvas.addMouseListener(new MouseAdapter() {
 
+			/**
+			 * @see java.awt.event.MouseAdapter#mousePressed(java.awt.event.MouseEvent)
+			 */
 			@Override
 			public void mousePressed(MouseEvent e) {
 //				System.out.println("MouseMotionAdapter:mousePressed");
@@ -79,6 +86,22 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 				} else {
 					photo.startNewRemark(oldX, oldY);
 					currColor=Color.BLACK;
+				}
+			}
+
+			/**
+			 * @see java.awt.event.MouseAdapter#mouseReleased(java.awt.event.MouseEvent)
+			 */
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if (e.getButton() == MouseEvent.BUTTON3){
+					String gesture = gesturesRecognizer.getGesture();
+					System.out.println(gesture);
+					if (pattern.matcher(gesture).matches()){
+						System.out.println("delete");
+					}
+					gesturesRecognizer.clearTemporaryInfo();
+					repaint();
 				}
 			}
 		});
@@ -95,8 +118,10 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 //				graphics2d.dispose();
 				oldX = currentX;
 				oldY = currentY;
-				if (e.getButton() == MouseEvent.BUTTON1){
+				if (currColor == Color.BLACK){
 					photo.addRemarkPoint(currentX, currentY);
+				} else {
+					gesturesRecognizer.processMouseEvent(e);
 				}
 			}
 		});
@@ -161,5 +186,7 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 			e.printStackTrace();
 		}
 	}
+
+
 
 }
