@@ -18,8 +18,13 @@ import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 public class MouseGestureListener extends MouseAdapter implements
 		MouseMotionListener {
 	private static final Pattern DELETE_PATTERN = Pattern.compile("[RBC]+[ELD]+[RBC]+");
-	private static final Pattern NEXT_PHOTO_PATTERN = Pattern.compile("[RBC]");
-	private static final Pattern PREV_PHOTO_PATTERN = Pattern.compile("[LAE]");
+	private static final Pattern NEXT_PHOTO_PATTERN = Pattern.compile("[RBC]+");
+	private static final Pattern PREV_PHOTO_PATTERN = Pattern.compile("[LAE]+");
+
+	private static final Pattern WORK_TAG_PATTERN = Pattern.compile("[CD]+[BU]+[CD]+[BU]+");
+	private static final Pattern VACATION_TAG_PATTERN = Pattern.compile("[CD]+[BU]+");
+	private static final Pattern SHCOOL_TAG_PATTERN = Pattern.compile("[LAE]+");
+	private static final Pattern FAMILY_TAG_PATTERN = Pattern.compile("[LAE]+");
 
 	private final MouseGesturesRecognizer gesturesRecognizer = new MouseGesturesRecognizer();
 	private boolean isGesture;

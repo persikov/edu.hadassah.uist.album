@@ -1,7 +1,7 @@
 /**
  *
  */
-package edu.hadassah.uist.album.photo.app.component;
+package edu.hadassah.uist.album.photo.app.listeners;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -10,6 +10,8 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+
+import edu.hadassah.uist.album.photo.app.component.PhotoModel;
 
 public final class RemarkDrawListener extends MouseAdapter implements MouseMotionListener {
 
@@ -65,7 +67,9 @@ public final class RemarkDrawListener extends MouseAdapter implements MouseMotio
 	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		parent.repaint();
+		if (currColor == Color.RED){
+			parent.repaint();
+		}
 	}
 
 	@Override

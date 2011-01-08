@@ -77,8 +77,8 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 			contentPanel.add((JComponent)nextPhotoComponents);
 			contentPanel.invalidate();
 			contentPanel.revalidate();
-			contentPanel.repaint();
 		}
+		contentPanel.repaint();
 	}
 
 	/**

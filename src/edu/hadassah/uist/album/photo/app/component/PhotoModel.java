@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
@@ -16,6 +17,7 @@ public class PhotoModel {
 	protected Vector<ActionListener> listeners;
 	private final File file;
 	private final Remarks remarks = new Remarks();
+	private final EnumSet<PhotoTags> tags = EnumSet.noneOf(PhotoTags.class);
 
 	public PhotoModel(File file)
 	{
@@ -97,5 +99,13 @@ public class PhotoModel {
 	 */
 	public boolean isFlipped() {
 		return flipped;
+	}
+
+	public boolean addTag(PhotoTags tagToAdd){
+		return tags.add(tagToAdd);
+	}
+
+	public boolean removeTag(PhotoTags tagToAdd){
+		return tags.remove(tagToAdd);
 	}
 }

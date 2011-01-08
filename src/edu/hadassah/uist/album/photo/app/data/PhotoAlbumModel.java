@@ -76,6 +76,10 @@ public class PhotoAlbumModel implements IPhotoAlbumModel {
 
 	private static int mod(int x, int y)
 	{
+		if (y == 0){
+			return 0;
+		}
+
 	    int result = x % y;
 	    if (result < 0)
 	    {

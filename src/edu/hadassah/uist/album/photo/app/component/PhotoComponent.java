@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import edu.hadassah.uist.album.photo.app.listeners.MouseGestureListener;
+import edu.hadassah.uist.album.photo.app.listeners.RemarkDrawListener;
 import edu.hadassah.uist.album.photo.model.component.IPhotoComponent;
 import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 
@@ -34,7 +35,6 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 	}
 
 	protected PhotoModel photoModel;
-	protected DoubleClickListener dblClickListener;
 	protected final JPanel canvas;
 
 //	protected Graphics2D graphics2d;
@@ -44,7 +44,6 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 	public PhotoComponent(File file, IPhotoAlbumController mediator){
 
 		setDoubleBuffered(true);
-		setOpaque(true);
 		setLayout(new FlowLayout(FlowLayout.LEFT, 20, 20));
 		setOpaque(true);
 		//### isOptimizedDrawingEnabled
@@ -55,6 +54,8 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 		canvas.setVisible(false);
 		canvas.setBackground(Color.GREEN);
 		canvas.setDoubleBuffered(true);
+		canvas.setOpaque(true);
+
 
 		PhotoFlippListener doubleClickListener = new PhotoFlippListener();
 		MouseGestureListener gesturesRecognizer = new MouseGestureListener(mediator);
