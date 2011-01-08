@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import edu.hadassah.uist.album.photo.app.component.PhotoComponent;
 import edu.hadassah.uist.album.photo.model.component.IPhotoComponent;
+import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 
 /**
  * @author Sergey Persikov
@@ -20,8 +21,8 @@ public class PhotoComponentFactory {
 	 * @return Object
 	 * @throws IOException
 	 */
-	public IPhotoComponent createPhotoComponent(File file) throws IOException {
-		PhotoComponent photoComponent = new PhotoComponent(file);
+	public IPhotoComponent createPhotoComponent(File file, IPhotoAlbumController mediator) throws IOException {
+		PhotoComponent photoComponent = new PhotoComponent(file, mediator);
 		photoComponent.loadPhoto();
 		return photoComponent;
 	}

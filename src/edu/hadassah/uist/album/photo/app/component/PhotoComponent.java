@@ -9,49 +9,39 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.io.IOException;
-import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import edu.hadassah.uist.album.photo.app.utils.MouseGesturesRecognizer;
+import edu.hadassah.uist.album.photo.app.listeners.MouseGestureListener;
 import edu.hadassah.uist.album.photo.model.component.IPhotoComponent;
+import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 
 
 public class PhotoComponent extends JPanel implements IPhotoComponent
 {
-	/**
-	 * @author Sergey Persikov
-	 *
-	 */
-	private final class MouseAdapterExtension extends MouseAdapter {
+	final class PhotoFlippListener extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent e)
 		{
 			if (e.getClickCount() == 2) {
-				photo.flip();
+				photoModel.flip();
 				repaint();
 			}
 		}
 	}
 
-	protected PhotoModel photo;
+	protected PhotoModel photoModel;
 	protected DoubleClickListener dblClickListener;
-	protected int currentX, currentY, oldX, oldY;
 	protected final JPanel canvas;
-	private Color currColor = Color.BLACK;
-	private final MouseGesturesRecognizer gesturesRecognizer = new MouseGesturesRecognizer();
-
-	private final Pattern pattern = Pattern.compile("R+[LD]+R+");
 
 //	protected Graphics2D graphics2d;
 
 	protected static String pictureFrame = "Images"+System.getProperty("file.separator")+"cod.bmp";
 
-	public PhotoComponent(File file){
+	public PhotoComponent(File file, IPhotoAlbumController mediator){
 
 		setDoubleBuffered(true);
 		setOpaque(true);
@@ -59,77 +49,31 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 		setOpaque(true);
 		//### isOptimizedDrawingEnabled
 
-		photo = new PhotoModel(file);
+		photoModel = new PhotoModel(file);
 		canvas = new JPanel();
 		this.add(canvas);
 		canvas.setVisible(false);
 		canvas.setBackground(Color.GREEN);
 		canvas.setDoubleBuffered(true);
 
-		MouseAdapterExtension doubleClickListener = new MouseAdapterExtension();
+		PhotoFlippListener doubleClickListener = new PhotoFlippListener();
 		addMouseListener(doubleClickListener);
 		canvas.addMouseListener(doubleClickListener);
-		canvas.addMouseListener(new MouseAdapter() {
+		MouseGestureListener gesturesRecognizer = new MouseGestureListener(mediator);
+		canvas.addMouseListener(gesturesRecognizer);
+		canvas.addMouseMotionListener(gesturesRecognizer);
+		RemarkDrawListener remarkDrawListener = new RemarkDrawListener(this, canvas, photoModel);
+		canvas.addMouseListener(remarkDrawListener);
+		canvas.addMouseMotionListener(remarkDrawListener);
+	}
 
-			/**
-			 * @see java.awt.event.MouseAdapter#mousePressed(java.awt.event.MouseEvent)
-			 */
-			@Override
-			public void mousePressed(MouseEvent e) {
-//				System.out.println("MouseMotionAdapter:mousePressed");
-				oldX = e.getX();
-				oldY = e.getY();
-				Graphics2D graphics2d = (Graphics2D)canvas.getGraphics();
-				graphics2d.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-				if (e.getButton() == MouseEvent.BUTTON3){
-					currColor=Color.RED;
-				} else {
-					photo.startNewRemark(oldX, oldY);
-					currColor=Color.BLACK;
-				}
-			}
-
-			/**
-			 * @see java.awt.event.MouseAdapter#mouseReleased(java.awt.event.MouseEvent)
-			 */
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				if (e.getButton() == MouseEvent.BUTTON3){
-					String gesture = gesturesRecognizer.getGesture();
-					System.out.println(gesture);
-					if (pattern.matcher(gesture).matches()){
-						System.out.println("delete");
-					}
-					gesturesRecognizer.clearTemporaryInfo();
-					repaint();
-				}
-			}
-		});
-		canvas.addMouseMotionListener(new MouseMotionAdapter() {
-			@Override
-			public void mouseDragged(MouseEvent e) {
-//				System.out.println("MouseMotionAdapter:mouseDragged");
-				Graphics2D graphics2d = (Graphics2D)canvas.getGraphics();
-				graphics2d.setColor(currColor);
-				graphics2d.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-				currentX = e.getX();
-				currentY = e.getY();
-				graphics2d.drawLine(oldX, oldY, currentX, currentY);
-//				graphics2d.dispose();
-				oldX = currentX;
-				oldY = currentY;
-				if (currColor == Color.BLACK){
-					photo.addRemarkPoint(currentX, currentY);
-				} else {
-					gesturesRecognizer.processMouseEvent(e);
-				}
-			}
-		});
+	public Graphics getCanvasGraphics(){
+		return canvas.getGraphics();
 	}
 
 	public void loadPhoto() throws IOException{
-		photo.loadPhoto();
-		canvas.setPreferredSize(new Dimension(photo.getImage().getWidth(this), photo.getImage().getHeight(this)));
+		photoModel.loadPhoto();
+		canvas.setPreferredSize(new Dimension(photoModel.getImage().getWidth(this), photoModel.getImage().getHeight(this)));
 	}
 
 	/**
@@ -139,7 +83,7 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 	protected void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-		if (photo.flipped){
+		if (photoModel.flipped){
 			Graphics2D graphics2d = (Graphics2D) canvas.getGraphics();
 			paintRemarks(graphics2d);
 			canvas.setVisible(true);
@@ -147,7 +91,7 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 		else{
 			canvas.setVisible(false);
 			Graphics2D graphics2d = (Graphics2D) g;
-			graphics2d.drawImage(photo.getImage(), 20, 20, this);
+			graphics2d.drawImage(photoModel.getImage(), 20, 20, this);
 		}
 	}
 
@@ -156,7 +100,7 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 
 		g.setColor(Color.BLACK);
 		g.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-		for (Remark currRemark : photo.getAllRemarks()) {
+		for (Remark currRemark : photoModel.getAllRemarks()) {
 			oldPoint = currRemark.getStartPoint();
 
 			for (Point currPoint : currRemark.getPoints()) {

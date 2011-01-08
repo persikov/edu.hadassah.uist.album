@@ -124,12 +124,12 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 	public void addPhotoComponent(File file) {
 		IPhotoComponent photoComponent;
 		try {
-			photoComponent = photoComponentFactory.createPhotoComponent(file);
+			photoComponent = photoComponentFactory.createPhotoComponent(file, this);
 			albumModel.addPhotoComponent(photoComponent);
 			contentPanel.removeAll();
 			contentPanel.add((JComponent)photoComponent);
 		} catch (IOException e) {
-			setStatusMessage("Fails to load photo from " + file.getAbsolutePath()); //$NON-NLS-1$
+			setStatusMessage("Fails to load photoModel from " + file.getAbsolutePath()); //$NON-NLS-1$
 		}
 
 	}
@@ -154,10 +154,10 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 		IPhotoComponent photoComponent = null;
 		for (File currFile : files) {
 			try {
-				photoComponent = photoComponentFactory.createPhotoComponent(currFile);
+				photoComponent = photoComponentFactory.createPhotoComponent(currFile, this);
 				albumModel.addPhotoComponent(photoComponent);
 			} catch (IOException e) {
-				setStatusMessage("Fails to load photo from " + currFile.getAbsolutePath()); //$NON-NLS-1$
+				setStatusMessage("Fails to load photoModel from " + currFile.getAbsolutePath()); //$NON-NLS-1$
 			}
 		}
 		if ( photoComponent != null){
