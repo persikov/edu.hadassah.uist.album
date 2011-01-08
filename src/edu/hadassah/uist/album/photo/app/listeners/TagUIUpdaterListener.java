@@ -45,7 +45,7 @@ public class TagUIUpdaterListener implements ActionListener, ChangeListener {
 		Object source = e.getSource();
 		if (source instanceof ITagable){
 			ITagable photoModel = (ITagable)source;
-//			mediator.setSelectedTags(photoModel.getTags());
+			mediator.setSelectedTags(photoModel.getTags());
 		}
 
 	}

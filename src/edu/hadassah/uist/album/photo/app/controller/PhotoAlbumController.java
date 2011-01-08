@@ -6,6 +6,7 @@ package edu.hadassah.uist.album.photo.app.controller;
 import java.awt.Component;
 import java.io.File;
 import java.io.IOException;
+import java.util.EnumSet;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -173,6 +174,14 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 	@Override
 	public void tagCurrentComponent(PhotoTags tag) {
 		albumModel.tagCurrentComponent(tag);
+	}
+
+	/**
+	 * @see edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController#setSelectedTags(java.util.EnumSet)
+	 */
+	@Override
+	public void setSelectedTags(EnumSet<PhotoTags> tags) {
+		//TODO
 	}
 
 }

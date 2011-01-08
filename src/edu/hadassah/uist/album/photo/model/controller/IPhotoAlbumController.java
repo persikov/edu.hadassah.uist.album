@@ -5,6 +5,7 @@ package edu.hadassah.uist.album.photo.model.controller;
 
 import java.awt.Component;
 import java.io.File;
+import java.util.EnumSet;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -57,5 +58,10 @@ public interface IPhotoAlbumController {
 	 * @param tag void
 	 */
 	public void tagCurrentComponent(PhotoTags tag);
+
+	/**
+	 * @param tags void
+	 */
+	public void setSelectedTags(EnumSet<PhotoTags> tags);
 
 }
