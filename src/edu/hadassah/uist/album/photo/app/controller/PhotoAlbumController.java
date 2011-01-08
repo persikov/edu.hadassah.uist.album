@@ -10,6 +10,7 @@ import java.io.IOException;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 
+import edu.hadassah.uist.album.photo.app.component.PhotoTags;
 import edu.hadassah.uist.album.photo.app.factory.PhotoComponentFactory;
 import edu.hadassah.uist.album.photo.app.utils.MessagesUtils;
 import edu.hadassah.uist.album.photo.model.component.IPhotoComponent;
@@ -70,15 +71,7 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 	@Override
 	public void showNextPhoto() {
 		IPhotoComponent nextPhotoComponents = albumModel.getNextPhotoComponents();
-		if ( nextPhotoComponents == null){
-			setStatusMessage(MessagesUtils.getString(NOTHING_TO_SHOW));
-		} else {
-			contentPanel.removeAll();
-			contentPanel.add((JComponent)nextPhotoComponents);
-			contentPanel.invalidate();
-			contentPanel.revalidate();
-		}
-		contentPanel.repaint();
+		showPhoto(nextPhotoComponents);
 	}
 
 	/**
@@ -86,19 +79,26 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 	 */
 	@Override
 	public void showPreviousPhoto() {
-		//TODO should we remove prev component?
 		IPhotoComponent previousPhotoComponents = albumModel.getPreviousPhotoComponents();
-		if ( previousPhotoComponents == null){
+		showPhoto(previousPhotoComponents);
+	}
+
+	/**
+	 * @param photoComponents void
+	 */
+	private void showPhoto(IPhotoComponent photoComponents) {
+		if ( photoComponents == null){
 			setStatusMessage(MessagesUtils.getString(NOTHING_TO_SHOW));
 		} else {
 			contentPanel.removeAll();
-			JComponent photoComponents = (JComponent)previousPhotoComponents;
-			contentPanel.add(photoComponents);
+			contentPanel.add((JComponent)photoComponents);
 			contentPanel.invalidate();
 			contentPanel.revalidate();
-			contentPanel.repaint();
 		}
+		photoComponents.getModel().raiseActionEvent("shown");
+		contentPanel.repaint();
 	}
+
 
 	/**
 	 * @see edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController#setContentPanel(javax.swing.JComponent)
@@ -165,6 +165,14 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 			contentPanel.add((JComponent)photoComponent);
 		}
 
+	}
+
+	/**
+	 * @see edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController#tagCurrentComponent(edu.hadassah.uist.album.photo.app.component.PhotoTags)
+	 */
+	@Override
+	public void tagCurrentComponent(PhotoTags tag) {
+		albumModel.tagCurrentComponent(tag);
 	}
 
 }

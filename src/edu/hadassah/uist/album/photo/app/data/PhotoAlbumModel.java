@@ -7,6 +7,7 @@ import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.hadassah.uist.album.photo.app.component.PhotoTags;
 import edu.hadassah.uist.album.photo.model.component.IPhotoComponent;
 import edu.hadassah.uist.album.photo.model.data.IPhotoAlbumModel;
 
@@ -86,5 +87,16 @@ public class PhotoAlbumModel implements IPhotoAlbumModel {
 	        result += y;
 	    }
 	    return result;
+	}
+
+	/**
+	 * @see edu.hadassah.uist.album.photo.model.data.IPhotoAlbumModel#tagCurrentComponent(edu.hadassah.uist.album.photo.app.component.PhotoTags)
+	 */
+	@Override
+	public void tagCurrentComponent(PhotoTags tag) {
+		if ( photoComponents.isEmpty()){
+			return;
+		}
+		photoComponents.get(currPhotoIndex).getModel().addTag(tag);
 	}
 }

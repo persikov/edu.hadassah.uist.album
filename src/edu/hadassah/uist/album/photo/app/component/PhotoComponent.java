@@ -28,18 +28,18 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 		public void mouseClicked(MouseEvent e)
 		{
 			if (e.getClickCount() == 2) {
-				photoModel.flip();
+				getModel().flip();
 				repaint();
 			}
 		}
 	}
 
-	protected PhotoModel photoModel;
-	protected final JPanel canvas;
+	private final PhotoModel photoModel;
+	private final JPanel canvas;
 
 //	protected Graphics2D graphics2d;
 
-	protected static String pictureFrame = "Images"+System.getProperty("file.separator")+"cod.bmp";
+	private static String pictureFrame = "Images"+System.getProperty("file.separator")+"cod.bmp";
 
 	public PhotoComponent(File file, IPhotoAlbumController mediator){
 
@@ -133,6 +133,14 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 		{
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * @return the photoModel
+	 */
+	@Override
+	public PhotoModel getModel() {
+		return photoModel;
 	}
 
 

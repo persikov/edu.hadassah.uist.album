@@ -1,20 +1,26 @@
 package edu.hadassah.uist.album.photo.app.component;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumSet;
-import java.util.Vector;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
 
-public class PhotoModel {
+public class PhotoModel implements ITagable {
+	/**
+	 *
+	 */
+	private static final int DEFAULT_EVENT_ID = 0;
 	protected Image image = null;
 	protected boolean flipped = false;
 
-	protected Vector<ActionListener> listeners;
+	protected List<ActionListener> listeners;
 	private final File file;
 	private final Remarks remarks = new Remarks();
 	private final EnumSet<PhotoTags> tags = EnumSet.noneOf(PhotoTags.class);
@@ -22,7 +28,7 @@ public class PhotoModel {
 	public PhotoModel(File file)
 	{
 		this.file = file;
-		listeners = new Vector<ActionListener>();
+		listeners = new ArrayList<ActionListener>();
 	}
 
 	/**
@@ -32,53 +38,52 @@ public class PhotoModel {
 	public void loadPhoto() throws IOException {
 		if(file != null){
 			image = ImageIO.read(file);
+			raiseActionEvent("image loaded");
 		}
 	}
 
-	public PhotoModel(File file, Vector<ActionListener> listeners) throws IOException
-	{
+	public PhotoModel(File file, List<ActionListener> listeners) {
 		this(file);
-		this.listeners = listeners;
-		raiseActionEvent();
+		this.listeners =  new ArrayList<ActionListener>(listeners);
+		raiseActionEvent("model created");
 	}
 
 	public void flip()
 	{
 		this.flipped = !this.flipped;
-		raiseActionEvent();
+		raiseActionEvent("photo flipped");
 	}
 
-	public Image getImage()
-	{
+	public Image getImage(){
 		return image;
 	}
 
-	public void addActionListener(ActionListener listener)
-	{
+	public void addActionListener(ActionListener listener){
 		if (listeners.contains(listener)) {
 			return;
 		}
 		listeners.add(listener);
 	}
 
-	public void removeActionListener(ActionListener listener)
-	{
+	public void removeActionListener(ActionListener listener){
 		if (!listeners.contains(listener)) {
 			return;
 		}
 		listeners.remove(listener);
 	}
 
-	protected void raiseActionEvent()
-	{
+	public void raiseActionEvent(String command){
+		raiseActionEvent(command, DEFAULT_EVENT_ID);
+	}
+
+	protected void raiseActionEvent(String command, int eventId){
 		for (ActionListener l : listeners) {
-			l.actionPerformed(null);
+			l.actionPerformed(new ActionEvent(this, eventId, command));
 		}
 	}
 
 
-	public Remarks getRemarks()
-	{
+	public Remarks getRemarks(){
 		return remarks;
 	}
 
@@ -101,11 +106,31 @@ public class PhotoModel {
 		return flipped;
 	}
 
+	/**
+	 * @see edu.hadassah.uist.album.photo.app.component.ITagable#addTag(edu.hadassah.uist.album.photo.app.component.PhotoTags)
+	 */
+	@Override
 	public boolean addTag(PhotoTags tagToAdd){
-		return tags.add(tagToAdd);
+		boolean added = tags.add(tagToAdd);
+		raiseActionEvent("add tag");
+		return added;
 	}
 
+	/**
+	 * @see edu.hadassah.uist.album.photo.app.component.ITagable#removeTag(edu.hadassah.uist.album.photo.app.component.PhotoTags)
+	 */
+	@Override
 	public boolean removeTag(PhotoTags tagToAdd){
-		return tags.remove(tagToAdd);
+		boolean removed = tags.remove(tagToAdd);
+		raiseActionEvent("remove tag");
+		return removed;
+	}
+
+	/**
+	 * @see edu.hadassah.uist.album.photo.app.component.ITagable#getTags()
+	 */
+	@Override
+	public EnumSet<PhotoTags> getTags() {
+		return tags;
 	}
 }

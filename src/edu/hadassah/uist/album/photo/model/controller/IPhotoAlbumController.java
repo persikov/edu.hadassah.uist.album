@@ -9,6 +9,8 @@ import java.io.File;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 
+import edu.hadassah.uist.album.photo.app.component.PhotoTags;
+
 
 /**
  * @author persikov
@@ -50,5 +52,10 @@ public interface IPhotoAlbumController {
 	public void addPhotoComponents(File[] files);
 
 	public void removeCurrentComponent();
+
+	/**
+	 * @param tag void
+	 */
+	public void tagCurrentComponent(PhotoTags tag);
 
 }

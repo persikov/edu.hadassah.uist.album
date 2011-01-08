@@ -23,11 +23,13 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import edu.hadassah.uist.album.photo.app.actions.ComponentVisibilityToggleAction;
+import edu.hadassah.uist.album.photo.app.component.PhotoTags;
 import edu.hadassah.uist.album.photo.app.listeners.ImportFolderPhotoListener;
 import edu.hadassah.uist.album.photo.app.listeners.ImportPhotoListener;
 import edu.hadassah.uist.album.photo.app.listeners.LigthFrameComponentListener;
 import edu.hadassah.uist.album.photo.app.listeners.NextPhotoListener;
 import edu.hadassah.uist.album.photo.app.listeners.StatusBarUpdater;
+import edu.hadassah.uist.album.photo.app.listeners.TagSetListener;
 import edu.hadassah.uist.album.photo.app.utils.MessagesUtils;
 import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 import edu.hadassah.uist.album.photo.model.factory.IUIFactory;
@@ -210,18 +212,22 @@ public class UIFactory implements IUIFactory {
 
 		JCheckBox bTagVacation = new JCheckBox(MessagesUtils.getString(TAG_VACATION));
 		bTagVacation.addActionListener(statusUpdaterListener);
+		bTagVacation.addActionListener(new TagSetListener(mediator, PhotoTags.VACATION));
 		tagControlPanel.add(bTagVacation);
 
 		JCheckBox bTagFamily = new JCheckBox(MessagesUtils.getString(TAG_FAMILY));
 		bTagFamily.addActionListener(statusUpdaterListener);
+		bTagVacation.addActionListener(new TagSetListener(mediator, PhotoTags.FAMILY));
 		tagControlPanel.add(bTagFamily);
 
 		JCheckBox bTagSchool = new JCheckBox(MessagesUtils.getString(TAG_SCHOOL));
 		bTagSchool.addActionListener(statusUpdaterListener);
+		bTagVacation.addActionListener(new TagSetListener(mediator, PhotoTags.SHCOOL));
 		tagControlPanel.add(bTagSchool);
 
 		JCheckBox bTagWork = new JCheckBox(MessagesUtils.getString(TAG_WORK));
 		bTagWork.addActionListener(statusUpdaterListener);
+		bTagVacation.addActionListener(new TagSetListener(mediator, PhotoTags.WORK));
 		tagControlPanel.add(bTagWork);
 
 
