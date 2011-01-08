@@ -91,4 +91,11 @@ public class PhotoModel {
 	public Collection<Remark> getAllRemarks() {
 		return remarks.getAllRemarks();
 	}
+
+	/**
+	 * @return boolean
+	 */
+	public boolean isFlipped() {
+		return flipped;
+	}
 }

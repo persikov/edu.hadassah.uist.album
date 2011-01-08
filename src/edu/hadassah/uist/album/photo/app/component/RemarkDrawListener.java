@@ -15,7 +15,7 @@ public final class RemarkDrawListener extends MouseAdapter implements MouseMotio
 
 	private int currentX, currentY, oldX, oldY;
 	private Color currColor = Color.BLACK;
-	private final Component component;
+	private final Component parent;
 	private final PhotoModel photoModel;
 	private final Component canvas;
 
@@ -24,7 +24,7 @@ public final class RemarkDrawListener extends MouseAdapter implements MouseMotio
 	 * @param photoComponent
 	 */
 	public RemarkDrawListener(Component parent, Component canvas, PhotoModel photoModel) {
-		this.component = parent;
+		this.parent = parent;
 		this.canvas = canvas;
 		this.photoModel = photoModel;
 	}
@@ -37,7 +37,7 @@ public final class RemarkDrawListener extends MouseAdapter implements MouseMotio
 		//				System.out.println("MouseMotionAdapter:mousePressed");
 		oldX = e.getX();
 		oldY = e.getY();
-		Graphics2D g2d = (Graphics2D)canvas.getGraphics();
+		Graphics2D g2d = getGraphics2D();
 		g2d.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 		if (e.getButton() == MouseEvent.BUTTON3){
 			currColor=Color.RED;
@@ -48,17 +48,29 @@ public final class RemarkDrawListener extends MouseAdapter implements MouseMotio
 	}
 
 	/**
+	 * @return Graphics2D
+	 */
+	private Graphics2D getGraphics2D() {
+		Graphics2D g2d;
+		if ( photoModel.isFlipped()){
+			g2d = (Graphics2D)canvas.getGraphics();
+		} else {
+			g2d = (Graphics2D)photoModel.getImage().getGraphics();
+		}
+		return g2d;
+	}
+
+	/**
 	 * @see java.awt.event.MouseAdapter#mouseReleased(java.awt.event.MouseEvent)
 	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		component.repaint();
+		parent.repaint();
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		//			System.out.println("MouseMotionAdapter:mouseDragged");
-		Graphics2D g2d = (Graphics2D)canvas.getGraphics();
+		Graphics2D g2d = getGraphics2D();
 		g2d.setColor(currColor);
 		g2d.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 		currentX = e.getX();

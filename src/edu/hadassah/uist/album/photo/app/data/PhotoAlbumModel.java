@@ -69,7 +69,9 @@ public class PhotoAlbumModel implements IPhotoAlbumModel {
 		if ( photoComponents.isEmpty()){
 			return null;//TODO return null object
 		}
-		return (Component)photoComponents.remove(currPhotoIndex);
+		Component removed = (Component)photoComponents.remove(currPhotoIndex);
+		currPhotoIndex = mod(currPhotoIndex - 1, photoComponents.size());
+		return removed;
 	}
 
 	private static int mod(int x, int y)

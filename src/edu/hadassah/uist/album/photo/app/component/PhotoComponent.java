@@ -57,9 +57,12 @@ public class PhotoComponent extends JPanel implements IPhotoComponent
 		canvas.setDoubleBuffered(true);
 
 		PhotoFlippListener doubleClickListener = new PhotoFlippListener();
-		addMouseListener(doubleClickListener);
-		canvas.addMouseListener(doubleClickListener);
 		MouseGestureListener gesturesRecognizer = new MouseGestureListener(mediator);
+		addMouseListener(doubleClickListener);
+		addMouseListener(gesturesRecognizer);
+		addMouseMotionListener(gesturesRecognizer);
+
+		canvas.addMouseListener(doubleClickListener);
 		canvas.addMouseListener(gesturesRecognizer);
 		canvas.addMouseMotionListener(gesturesRecognizer);
 		RemarkDrawListener remarkDrawListener = new RemarkDrawListener(this, canvas, photoModel);

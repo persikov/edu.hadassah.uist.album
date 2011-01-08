@@ -17,7 +17,9 @@ import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
  */
 public class MouseGestureListener extends MouseAdapter implements
 		MouseMotionListener {
-	private static final Pattern pattern = Pattern.compile("[RNB]+[ELD]+[RNB]+");
+	private static final Pattern DELETE_PATTERN = Pattern.compile("[RBC]+[ELD]+[RBC]+");
+	private static final Pattern NEXT_PHOTO_PATTERN = Pattern.compile("[RBC]");
+	private static final Pattern PREV_PHOTO_PATTERN = Pattern.compile("[LAE]");
 
 	private final MouseGesturesRecognizer gesturesRecognizer = new MouseGesturesRecognizer();
 	private boolean isGesture;
@@ -41,8 +43,15 @@ public class MouseGestureListener extends MouseAdapter implements
 		if (e.getButton() == MouseEvent.BUTTON3){
 			String gesture = gesturesRecognizer.getGesture();
 			System.out.println(gesture);
-			if (pattern.matcher(gesture).matches()){
+			if (DELETE_PATTERN.matcher(gesture).matches()){
 				System.out.println("delete");
+				mediator.removeCurrentComponent();
+			} else if (NEXT_PHOTO_PATTERN.matcher(gesture).matches()){
+				mediator.showNextPhoto();
+				System.out.println("next");
+			} else if (PREV_PHOTO_PATTERN.matcher(gesture).matches()){
+				mediator.showPreviousPhoto();
+				System.out.println("prev");
 			}
 			gesturesRecognizer.clearTemporaryInfo();
 		}
