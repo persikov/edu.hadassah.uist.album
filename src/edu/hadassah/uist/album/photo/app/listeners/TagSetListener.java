@@ -33,7 +33,7 @@ public class TagSetListener implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		mediator.tagCurrentComponent(tag);
+		mediator.toggleCurrentComponentTag(tag);
 	}
 
 }

@@ -174,11 +174,11 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 	}
 
 	/**
-	 * @see edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController#tagCurrentComponent(edu.hadassah.uist.album.photo.app.component.PhotoTags)
+	 * @see edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController#toggleCurrentComponentTag(edu.hadassah.uist.album.photo.app.component.PhotoTags)
 	 */
 	@Override
-	public void tagCurrentComponent(PhotoTags tag) {
-		albumModel.tagCurrentComponent(tag);
+	public void toggleCurrentComponentTag(PhotoTags tag) {
+		albumModel.toggleCurrentComponentTag(tag);
 	}
 
 	/**

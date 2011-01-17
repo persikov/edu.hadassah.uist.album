@@ -58,7 +58,7 @@ public interface IPhotoAlbumController {
 	/**
 	 * @param tag void
 	 */
-	public void tagCurrentComponent(PhotoTags tag);
+	public void toggleCurrentComponentTag(PhotoTags tag);
 
 	/**
 	 * @param tags void

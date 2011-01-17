@@ -5,8 +5,10 @@ package edu.hadassah.uist.album.photo.app.data;
 
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
+import edu.hadassah.uist.album.photo.app.component.PhotoModel;
 import edu.hadassah.uist.album.photo.app.component.PhotoTags;
 import edu.hadassah.uist.album.photo.model.component.IPhotoComponent;
 import edu.hadassah.uist.album.photo.model.data.IPhotoAlbumModel;
@@ -90,14 +92,20 @@ public class PhotoAlbumModel implements IPhotoAlbumModel {
 	}
 
 	/**
-	 * @see edu.hadassah.uist.album.photo.model.data.IPhotoAlbumModel#tagCurrentComponent(edu.hadassah.uist.album.photo.app.component.PhotoTags)
+	 * @see edu.hadassah.uist.album.photo.model.data.IPhotoAlbumModel#toggleCurrentComponentTag(edu.hadassah.uist.album.photo.app.component.PhotoTags)
 	 */
 	@Override
-	public void tagCurrentComponent(PhotoTags tag) {
+	public void toggleCurrentComponentTag(PhotoTags tag) {
 		if ( photoComponents.isEmpty()){
 			return;
 		}
-		photoComponents.get(currPhotoIndex).getModel().addTag(tag);
+		PhotoModel model = photoComponents.get(currPhotoIndex).getModel();
+		EnumSet<PhotoTags> selectedTags = model.getTags();
+		if ( selectedTags.contains(tag)){
+			model.removeTag(tag);
+		} else {
+			model.addTag(tag);
+		}
 	}
 
 }

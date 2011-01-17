@@ -22,10 +22,10 @@ public class MouseGestureListener extends MouseAdapter implements
 	private static final Pattern NEXT_PHOTO_PATTERN = Pattern.compile("[RBC]+");
 	private static final Pattern PREV_PHOTO_PATTERN = Pattern.compile("[LAE]+");
 
-	private static final Pattern WORK_TAG_PATTERN = Pattern.compile("[CD]+[BU]+[CD]+[BU]+");
+	private static final Pattern WORK_TAG_PATTERN = Pattern.compile("[CD]+[BU]+[CD]+[RBU]+");
 	private static final Pattern VACATION_TAG_PATTERN = Pattern.compile("[CD]+[BU]+");
 	private static final Pattern SHCOOL_TAG_PATTERN = Pattern.compile("[LAE]+[CDR]+[LAE]+");
-	private static final Pattern FAMILY_TAG_PATTERN = Pattern.compile("[UR]+");
+	private static final Pattern FAMILY_TAG_PATTERN = Pattern.compile("[U]+[B]*[R]+");
 
 	private final MouseGesturesRecognizer gesturesRecognizer = new MouseGesturesRecognizer();
 	private boolean isGesture;
@@ -53,16 +53,16 @@ public class MouseGestureListener extends MouseAdapter implements
 				System.out.println("delete");
 				mediator.removeCurrentComponent();
 			} else if (WORK_TAG_PATTERN.matcher(gesture).matches()){
-				mediator.tagCurrentComponent(PhotoTags.WORK);
+				mediator.toggleCurrentComponentTag(PhotoTags.WORK);
 				System.out.println("tag work");
 			} else if (VACATION_TAG_PATTERN.matcher(gesture).matches()){
-				mediator.tagCurrentComponent(PhotoTags.VACATION);
+				mediator.toggleCurrentComponentTag(PhotoTags.VACATION);
 				System.out.println("tag vacation");
 			} else if (SHCOOL_TAG_PATTERN.matcher(gesture).matches()){
-				mediator.tagCurrentComponent(PhotoTags.SHCOOL);
+				mediator.toggleCurrentComponentTag(PhotoTags.SHCOOL);
 				System.out.println("tag school");
 			} else if (FAMILY_TAG_PATTERN.matcher(gesture).matches()){
-				mediator.tagCurrentComponent(PhotoTags.FAMILY);
+				mediator.toggleCurrentComponentTag(PhotoTags.FAMILY);
 				System.out.println("tag family");
 			} else if (NEXT_PHOTO_PATTERN.matcher(gesture).matches()){
 				mediator.showNextPhoto();
