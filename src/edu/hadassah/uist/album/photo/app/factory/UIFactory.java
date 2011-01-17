@@ -30,6 +30,7 @@ import edu.hadassah.uist.album.photo.app.listeners.LigthFrameComponentListener;
 import edu.hadassah.uist.album.photo.app.listeners.NextPhotoListener;
 import edu.hadassah.uist.album.photo.app.listeners.StatusBarUpdater;
 import edu.hadassah.uist.album.photo.app.listeners.TagSetListener;
+import edu.hadassah.uist.album.photo.app.listeners.UpdateTagsListener;
 import edu.hadassah.uist.album.photo.app.utils.MessagesUtils;
 import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 import edu.hadassah.uist.album.photo.model.factory.IUIFactory;
@@ -213,21 +214,25 @@ public class UIFactory implements IUIFactory {
 		JCheckBox bTagVacation = new JCheckBox(MessagesUtils.getString(TAG_VACATION));
 		bTagVacation.addActionListener(statusUpdaterListener);
 		bTagVacation.addActionListener(new TagSetListener(mediator, PhotoTags.VACATION));
+		mediator.addActionListener(new UpdateTagsListener(bTagVacation, PhotoTags.VACATION));
 		tagControlPanel.add(bTagVacation);
 
 		JCheckBox bTagFamily = new JCheckBox(MessagesUtils.getString(TAG_FAMILY));
 		bTagFamily.addActionListener(statusUpdaterListener);
-		bTagVacation.addActionListener(new TagSetListener(mediator, PhotoTags.FAMILY));
+		bTagFamily.addActionListener(new TagSetListener(mediator, PhotoTags.FAMILY));
+		mediator.addActionListener(new UpdateTagsListener(bTagFamily, PhotoTags.FAMILY));
 		tagControlPanel.add(bTagFamily);
 
 		JCheckBox bTagSchool = new JCheckBox(MessagesUtils.getString(TAG_SCHOOL));
 		bTagSchool.addActionListener(statusUpdaterListener);
-		bTagVacation.addActionListener(new TagSetListener(mediator, PhotoTags.SHCOOL));
+		bTagSchool.addActionListener(new TagSetListener(mediator, PhotoTags.SHCOOL));
+		mediator.addActionListener(new UpdateTagsListener(bTagSchool, PhotoTags.SHCOOL));
 		tagControlPanel.add(bTagSchool);
 
 		JCheckBox bTagWork = new JCheckBox(MessagesUtils.getString(TAG_WORK));
 		bTagWork.addActionListener(statusUpdaterListener);
-		bTagVacation.addActionListener(new TagSetListener(mediator, PhotoTags.WORK));
+		bTagWork.addActionListener(new TagSetListener(mediator, PhotoTags.WORK));
+		mediator.addActionListener(new UpdateTagsListener(bTagWork, PhotoTags.WORK));
 		tagControlPanel.add(bTagWork);
 
 

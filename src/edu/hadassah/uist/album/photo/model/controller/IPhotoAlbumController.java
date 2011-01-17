@@ -4,6 +4,7 @@
 package edu.hadassah.uist.album.photo.model.controller;
 
 import java.awt.Component;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.EnumSet;
 
@@ -63,5 +64,9 @@ public interface IPhotoAlbumController {
 	 * @param tags void
 	 */
 	public void setSelectedTags(EnumSet<PhotoTags> tags);
+
+	public abstract void removeActionListener(ActionListener listener);
+
+	public abstract void addActionListener(ActionListener listener);
 
 }

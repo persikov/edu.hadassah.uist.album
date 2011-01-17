@@ -99,4 +99,5 @@ public class PhotoAlbumModel implements IPhotoAlbumModel {
 		}
 		photoComponents.get(currPhotoIndex).getModel().addTag(tag);
 	}
+
 }

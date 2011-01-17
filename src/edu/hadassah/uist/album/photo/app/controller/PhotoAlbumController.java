@@ -4,9 +4,13 @@
 package edu.hadassah.uist.album.photo.app.controller;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -34,6 +38,7 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 	private final IPhotoAlbumModel albumModel;
 	private final PhotoComponentFactory photoComponentFactory = new PhotoComponentFactory();
 	private JComponent contentPanel;
+	protected List<ActionListener> listeners = new ArrayList<ActionListener>();
 
 	/**
 	 * Creates new instance of {@link PhotoAlbumController}
@@ -181,7 +186,35 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 	 */
 	@Override
 	public void setSelectedTags(EnumSet<PhotoTags> tags) {
-		//TODO
+		for (PhotoTags currTag : PhotoTags.values()) {
+			if (tags.contains(currTag) ){
+				raiseActionEvent("true", currTag.ordinal());
+			} else {
+				raiseActionEvent("false", currTag.ordinal());
+			}
+		}
+	}
+
+	protected void raiseActionEvent(String command, int eventId){
+		for (ActionListener l : listeners) {
+			l.actionPerformed(new ActionEvent(this, eventId, command));
+		}
+	}
+
+	@Override
+	public void addActionListener(ActionListener listener){
+		if (listeners.contains(listener)) {
+			return;
+		}
+		listeners.add(listener);
+	}
+
+	@Override
+	public void removeActionListener(ActionListener listener){
+		if (!listeners.contains(listener)) {
+			return;
+		}
+		listeners.remove(listener);
 	}
 
 }
