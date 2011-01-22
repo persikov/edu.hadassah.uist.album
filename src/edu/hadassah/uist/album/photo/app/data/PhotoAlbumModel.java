@@ -14,6 +14,7 @@ import edu.hadassah.uist.album.photo.model.component.IPhotoComponent;
 import edu.hadassah.uist.album.photo.model.data.IPhotoAlbumModel;
 
 /**
+ * @author Itay Cohen
  * @author Sergey Persikov
  *
  */

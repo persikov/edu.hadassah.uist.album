@@ -1,11 +1,14 @@
 /**
  * 
  */
-package edu.hadassah.uist.album.photo.app.component;
+package edu.hadassah.uist.album.photo.model.component;
 
 import java.util.EnumSet;
 
+import edu.hadassah.uist.album.photo.app.component.PhotoTags;
+
 /**
+ * @author Itay Cohen
  * @author Sergey Persikov
  *
  */

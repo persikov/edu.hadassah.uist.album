@@ -9,10 +9,11 @@ import java.awt.event.ActionListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import edu.hadassah.uist.album.photo.app.component.ITagable;
+import edu.hadassah.uist.album.photo.model.component.ITagable;
 import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 
 /**
+ * @author Itay Cohen
  * @author Sergey Persikov
  *
  */

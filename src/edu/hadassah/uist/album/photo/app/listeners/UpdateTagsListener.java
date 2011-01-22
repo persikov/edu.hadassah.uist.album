@@ -11,6 +11,7 @@ import javax.swing.AbstractButton;
 import edu.hadassah.uist.album.photo.app.component.PhotoTags;
 
 /**
+ * @author Itay Cohen
  * @author Sergey Persikov
  *
  */

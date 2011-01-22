@@ -24,6 +24,7 @@ import edu.hadassah.uist.album.photo.model.data.IPhotoAlbumModel;
 
 /**
  * Controller of the Photo Album application
+ * @author Itay Cohen
  * @author Sergey Persikov
  *
  */
@@ -53,11 +54,11 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 	 */
 	@Override
 	public void setStatusMessage(final String message) {
-		if ( statusBar != null){
-			statusBar.setText(message);
-		} else {
+		if ( statusBar == null) {
 			// TODO use log here
 			System.err.println("Failed to update status. Status bar was not set to controller"); //$NON-NLS-1$
+		} else {
+			statusBar.setText(message);
 		}
 
 	}

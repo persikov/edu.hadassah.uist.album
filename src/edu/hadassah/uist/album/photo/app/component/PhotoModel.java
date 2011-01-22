@@ -11,6 +11,8 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import edu.hadassah.uist.album.photo.model.component.ITagable;
+
 
 public class PhotoModel implements ITagable {
 	/**
@@ -50,7 +52,7 @@ public class PhotoModel implements ITagable {
 
 	public void flip()
 	{
-		this.flipped = !this.flipped;
+		this.flipped ^= true;
 		raiseActionEvent("photo flipped");
 	}
 
@@ -72,13 +74,14 @@ public class PhotoModel implements ITagable {
 		listeners.remove(listener);
 	}
 
-	public void raiseActionEvent(String command){
+	public final void raiseActionEvent(String command){
 		raiseActionEvent(command, DEFAULT_EVENT_ID);
 	}
 
-	protected void raiseActionEvent(String command, int eventId){
+	protected final void raiseActionEvent(String command, int eventId){
+		ActionEvent actionEvent = new ActionEvent(this, eventId, command);
 		for (ActionListener l : listeners) {
-			l.actionPerformed(new ActionEvent(this, eventId, command));
+			l.actionPerformed(actionEvent);
 		}
 	}
 
@@ -107,7 +110,7 @@ public class PhotoModel implements ITagable {
 	}
 
 	/**
-	 * @see edu.hadassah.uist.album.photo.app.component.ITagable#addTag(edu.hadassah.uist.album.photo.app.component.PhotoTags)
+	 * @see edu.hadassah.uist.album.photo.model.component.ITagable#addTag(edu.hadassah.uist.album.photo.app.component.PhotoTags)
 	 */
 	@Override
 	public boolean addTag(PhotoTags tagToAdd){
@@ -117,7 +120,7 @@ public class PhotoModel implements ITagable {
 	}
 
 	/**
-	 * @see edu.hadassah.uist.album.photo.app.component.ITagable#removeTag(edu.hadassah.uist.album.photo.app.component.PhotoTags)
+	 * @see edu.hadassah.uist.album.photo.model.component.ITagable#removeTag(edu.hadassah.uist.album.photo.app.component.PhotoTags)
 	 */
 	@Override
 	public boolean removeTag(PhotoTags tagToAdd){
@@ -127,7 +130,7 @@ public class PhotoModel implements ITagable {
 	}
 
 	/**
-	 * @see edu.hadassah.uist.album.photo.app.component.ITagable#getTags()
+	 * @see edu.hadassah.uist.album.photo.model.component.ITagable#getTags()
 	 */
 	@Override
 	public EnumSet<PhotoTags> getTags() {

@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 
 /**
+ * @author Itay Cohen
  * @author Sergey Persikov
  *
  */

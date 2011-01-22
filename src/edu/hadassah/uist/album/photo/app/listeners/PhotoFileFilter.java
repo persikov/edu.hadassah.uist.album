@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import edu.hadassah.uist.album.photo.app.utils.MessagesUtils;
 
 /**
+ * @author Itay Cohen
  * @author Sergey Persikov
  *
  */

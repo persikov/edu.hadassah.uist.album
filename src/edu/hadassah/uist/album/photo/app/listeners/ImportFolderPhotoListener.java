@@ -13,6 +13,7 @@ import edu.hadassah.uist.album.photo.app.utils.MessagesUtils;
 import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 
 /**
+ * @author Itay Cohen
  * @author Sergey Persikov
  *
  */
@@ -28,7 +29,7 @@ public class ImportFolderPhotoListener extends AImportPhotoListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		FC.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		super.actionPerformed(e);
 	}
 
@@ -45,8 +46,8 @@ public class ImportFolderPhotoListener extends AImportPhotoListener {
 	 */
 	@Override
 	public void run() {
-        File file = fc.getSelectedFile();
-        FilenameFilter filter = AImportPhotoListener.photoFileFilter;
+        File file = FC.getSelectedFile();
+        FilenameFilter filter = AImportPhotoListener.PHOTO_FILE_FILTER;
 		File[] listFiles = file.listFiles(filter);
         mediator.addPhotoComponents(listFiles);
         //This is where a real application would open the file.

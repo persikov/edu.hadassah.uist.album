@@ -14,7 +14,9 @@ import edu.hadassah.uist.album.photo.model.factory.IUIFactory;
 
 /**
  * Application main class
+ * @author Itay Cohen
  * @author Sergey Persikov
+ *
  */
 public class PhotoAlbum implements Runnable {
 

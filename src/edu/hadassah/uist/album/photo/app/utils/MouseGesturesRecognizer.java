@@ -7,6 +7,11 @@ import java.awt.event.MouseEvent;
 import javax.swing.SwingUtilities;
 
 
+/**
+ * @author Itay Cohen
+ * @author Sergey Persikov
+ *
+ */
 public class MouseGesturesRecognizer {
 	/**
 	 * String representation of left movement.

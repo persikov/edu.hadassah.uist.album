@@ -9,6 +9,7 @@ import edu.hadassah.uist.album.photo.app.utils.MessagesUtils;
 
 /**
  * Listener for changing menu item label according to the component status
+ * @author Itay Cohen
  * @author Sergey Persikov
  *
  */

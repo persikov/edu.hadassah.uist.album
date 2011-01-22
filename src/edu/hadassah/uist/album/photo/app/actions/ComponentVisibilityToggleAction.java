@@ -7,6 +7,7 @@ import javax.swing.AbstractAction;
 
 /**
  * Toggle component visibility action
+ * @author Itay Cohen
  * @author Sergey Persikov
  *
  */

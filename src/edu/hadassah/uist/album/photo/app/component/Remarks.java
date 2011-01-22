@@ -8,6 +8,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 
 /**
+ * @author Itay Cohen
  * @author Sergey Persikov
  *
  */

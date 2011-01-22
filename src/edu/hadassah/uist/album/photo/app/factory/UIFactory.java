@@ -37,6 +37,7 @@ import edu.hadassah.uist.album.photo.model.factory.IUIFactory;
 
 /**
  * UI elements factory for the application
+ * @author Itay Cohen
  * @author Sergey Persikov
  *
  */

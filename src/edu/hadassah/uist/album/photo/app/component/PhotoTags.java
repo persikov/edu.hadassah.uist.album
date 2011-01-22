@@ -4,6 +4,7 @@
 package edu.hadassah.uist.album.photo.app.component;
 
 /**
+ * @author Itay Cohen
  * @author Sergey Persikov
  *
  */

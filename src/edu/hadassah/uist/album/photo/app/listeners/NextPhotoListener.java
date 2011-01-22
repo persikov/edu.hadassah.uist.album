@@ -11,6 +11,7 @@ import javax.swing.SwingUtilities;
 import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 
 /**
+ * @author Itay Cohen
  * @author Sergey Persikov
  *
  */

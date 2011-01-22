@@ -13,6 +13,7 @@ import edu.hadassah.uist.album.photo.app.utils.MouseGesturesRecognizer;
 import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 
 /**
+ * @author Itay Cohen
  * @author Sergey Persikov
  *
  */
