@@ -8,6 +8,7 @@ import javax.swing.SwingUtilities;
 
 
 /**
+ * This class is implementation of SiGeR gestire algorithm.
  * @author Itay Cohen
  * @author Sergey Persikov
  *

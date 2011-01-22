@@ -15,16 +15,16 @@ import javax.swing.plaf.ComponentUI;
  * @author Sergey Persikov
  *
  */
-final class InnerPhotoComponentUI extends ComponentUI {
+final class PhotoCanvasUI extends ComponentUI {
 	private final JComponent canvas;
 	private final PhotoModel photoModel;
 
 	/**
-	 * Creates new instance of {@link InnerPhotoComponentUI}
+	 * Creates new instance of {@link PhotoCanvasUI}
 	 * @param photoComponent
 	 * @param canvas
 	 */
-	public InnerPhotoComponentUI(PhotoModel photoModel, JComponent canvas) {
+	public PhotoCanvasUI(PhotoModel photoModel, JComponent canvas) {
 		super();
 		this.photoModel = photoModel;
 		this.canvas = canvas;

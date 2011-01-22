@@ -8,15 +8,15 @@ import javax.swing.JPanel;
  * @author Sergey Persikov
  *
  */
-final class PhotoComponentUI extends JPanel {
-	private final InnerPhotoComponentUI photoUI;
+final class PhotoCanvas extends JPanel {
+	private final PhotoCanvasUI photoUI;
 	/**
-	 * Creates new instance of {@link PhotoComponentUI}
+	 * Creates new instance of {@link PhotoCanvas}
 	 * @param isDoubleBuffered
 	 */
-	PhotoComponentUI(PhotoModel photoModel ) {
+	PhotoCanvas(PhotoModel photoModel ) {
 		super(true);
-		photoUI = new InnerPhotoComponentUI(photoModel, this);
+		photoUI = new PhotoCanvasUI(photoModel, this);
 	}
 
 	/**

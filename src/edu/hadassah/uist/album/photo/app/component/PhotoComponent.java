@@ -44,7 +44,7 @@ public class PhotoComponent extends JComponent implements IPhotoComponent
 		setOpaque(false);
 
 		photoModel = new PhotoModel(file);
-		canvas = new PhotoComponentUI(photoModel);
+		canvas = new PhotoCanvas(photoModel);
 		this.add(canvas);
 		canvas.setVisible(false);
 		canvas.setBackground(Color.GREEN);
