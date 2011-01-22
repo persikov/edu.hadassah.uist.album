@@ -69,4 +69,9 @@ public interface IPhotoAlbumController {
 
 	public abstract void addActionListener(ActionListener listener);
 
+	/**
+	 *  void
+	 */
+	public void removeCurrentAnnotations();
+
 }

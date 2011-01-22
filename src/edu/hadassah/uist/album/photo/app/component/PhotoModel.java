@@ -133,4 +133,12 @@ public class PhotoModel implements ITagable {
 	public EnumSet<PhotoTags> getTags() {
 		return tags;
 	}
+
+	/**
+	 *  void
+	 */
+	public void removeAllRemarks() {
+		remarks.clear();
+
+	}
 }

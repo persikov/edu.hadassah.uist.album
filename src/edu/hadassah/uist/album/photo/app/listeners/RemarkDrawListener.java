@@ -5,11 +5,12 @@ package edu.hadassah.uist.album.photo.app.listeners;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+
+import javax.swing.JComponent;
 
 import edu.hadassah.uist.album.photo.app.component.PhotoModel;
 
@@ -17,15 +18,15 @@ public final class RemarkDrawListener extends MouseAdapter implements MouseMotio
 
 	private int currentX, currentY, oldX, oldY;
 	private Color currColor = Color.BLACK;
-	private final Component parent;
+	private final JComponent parent;
 	private final PhotoModel photoModel;
-	private final Component canvas;
+	private final JComponent canvas;
 
 	/**
 	 * Creates new instance of {@link RemarkDrawListener}
 	 * @param photoComponent
 	 */
-	public RemarkDrawListener(Component parent, Component canvas, PhotoModel photoModel) {
+	public RemarkDrawListener(JComponent parent, JComponent canvas, PhotoModel photoModel) {
 		this.parent = parent;
 		this.canvas = canvas;
 		this.photoModel = photoModel;
@@ -36,7 +37,6 @@ public final class RemarkDrawListener extends MouseAdapter implements MouseMotio
 	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
-		//				System.out.println("MouseMotionAdapter:mousePressed");
 		oldX = e.getX();
 		oldY = e.getY();
 		Graphics2D g2d = getGraphics2D();

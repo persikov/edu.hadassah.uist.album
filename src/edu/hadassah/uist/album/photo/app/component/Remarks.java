@@ -39,4 +39,12 @@ public class Remarks {
 		return remarks;
 	}
 
+	/**
+	 *  void
+	 */
+	public void clear() {
+		remarks.clear();
+
+	}
+
 }

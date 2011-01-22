@@ -100,9 +100,9 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 			contentPanel.add((JComponent)photoComponents);
 			contentPanel.invalidate();
 			contentPanel.revalidate();
+			photoComponents.getModel().raiseActionEvent("shown");
+			contentPanel.repaint();
 		}
-		photoComponents.getModel().raiseActionEvent("shown");
-		contentPanel.repaint();
 	}
 
 
@@ -215,6 +215,14 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 			return;
 		}
 		listeners.remove(listener);
+	}
+
+	/**
+	 * @see edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController#removeCurrentAnnotations()
+	 */
+	@Override
+	public void removeCurrentAnnotations() {
+		albumModel.removeCurrentAnnotations();
 	}
 
 }

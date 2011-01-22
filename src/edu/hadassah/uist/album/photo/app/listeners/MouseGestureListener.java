@@ -19,6 +19,7 @@ import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 public class MouseGestureListener extends MouseAdapter implements
 		MouseMotionListener {
 	private static final Pattern DELETE_PATTERN = Pattern.compile("[RBC]+[ELD]+[RBC]+");
+	private static final Pattern DELETE_ANNOTATION_PATTERN = Pattern.compile("[DE]+[L]+");
 	private static final Pattern NEXT_PHOTO_PATTERN = Pattern.compile("[RBC]+");
 	private static final Pattern PREV_PHOTO_PATTERN = Pattern.compile("[LAE]+");
 
@@ -31,15 +32,25 @@ public class MouseGestureListener extends MouseAdapter implements
 	private boolean isGesture;
 
 	private final IPhotoAlbumController mediator;
+	private boolean enableClearAnnotations = true;
 
 
+	/**
+	 * Creates new instance of {@link MouseGestureListener}
+	 * @param mediator
+	 * @param enableClearAnnotations
+	 */
+	public MouseGestureListener(IPhotoAlbumController mediator,
+			boolean enableClearAnnotations) {
+		this(mediator);
+		this.enableClearAnnotations = enableClearAnnotations;
+	}
 	/**
 	 * Creates new instance of {@link MouseGestureListener}
 	 * @param mediator
 	 */
 	public MouseGestureListener(IPhotoAlbumController mediator) {
 		this.mediator = mediator;
-		// TODO Auto-generated constructor stub
 	}
 	/**
 	 * @see java.awt.event.MouseAdapter#mouseReleased(java.awt.event.MouseEvent)
@@ -64,6 +75,9 @@ public class MouseGestureListener extends MouseAdapter implements
 			} else if (FAMILY_TAG_PATTERN.matcher(gesture).matches()){
 				mediator.toggleCurrentComponentTag(PhotoTags.FAMILY);
 				System.out.println("tag family");
+			} else if (enableClearAnnotations && DELETE_ANNOTATION_PATTERN.matcher(gesture).matches()){
+				mediator.removeCurrentAnnotations();
+				System.out.println("clear annotation");
 			} else if (NEXT_PHOTO_PATTERN.matcher(gesture).matches()){
 				mediator.showNextPhoto();
 				System.out.println("next");

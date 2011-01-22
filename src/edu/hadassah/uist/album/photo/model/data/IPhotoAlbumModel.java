@@ -33,4 +33,9 @@ public interface IPhotoAlbumModel {
 	 */
 	public void toggleCurrentComponentTag(PhotoTags tag);
 
+	/**
+	 * @return Component
+	 */
+	public void removeCurrentAnnotations();
+
 }
