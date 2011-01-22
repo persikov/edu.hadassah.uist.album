@@ -96,12 +96,18 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 	private void showPhoto(IPhotoComponent photoComponents) {
 		if ( photoComponents == null){
 			setStatusMessage(MessagesUtils.getString(NOTHING_TO_SHOW));
+			contentPanel.removeAll();
+			contentPanel.repaint();
 		} else {
 			contentPanel.removeAll();
 			contentPanel.add((JComponent)photoComponents);
 			contentPanel.invalidate();
 			contentPanel.revalidate();
-			photoComponents.getModel().raiseActionEvent("shown");
+			try {
+				photoComponents.getPhotoModel().loadPhoto();
+			} catch (IOException e) {
+				setStatusMessage("Fails to load photoModel from " + photoComponents.getPhotoModel().getFile().getAbsolutePath());
+			}
 			contentPanel.repaint();
 		}
 	}
@@ -130,15 +136,11 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 	@Override
 	public void addPhotoComponent(File file) {
 		IPhotoComponent photoComponent;
-		try {
-			photoComponent = photoComponentFactory.createPhotoComponent(file, this);
-			albumModel.addPhotoComponent(photoComponent);
-			contentPanel.removeAll();
-			contentPanel.add((JComponent)photoComponent);
-		} catch (IOException e) {
-			setStatusMessage("Fails to load photoModel from " + file.getAbsolutePath()); //$NON-NLS-1$
-		}
-
+		photoComponent = photoComponentFactory.createPhotoComponent(file, this);
+		albumModel.addPhotoComponent(photoComponent);
+//		contentPanel.removeAll();
+//		contentPanel.add((JComponent)photoComponent);
+		showPhoto(photoComponent);
 	}
 
 	/**
@@ -160,17 +162,14 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 	public void addPhotoComponents(File[] files) {
 		IPhotoComponent photoComponent = null;
 		for (File currFile : files) {
-			try {
-				photoComponent = photoComponentFactory.createPhotoComponent(currFile, this);
-				albumModel.addPhotoComponent(photoComponent);
-			} catch (IOException e) {
-				setStatusMessage("Fails to load photoModel from " + currFile.getAbsolutePath()); //$NON-NLS-1$
-			}
+			photoComponent = photoComponentFactory.createPhotoComponent(currFile, this);
+			albumModel.addPhotoComponent(photoComponent);
 		}
-		if ( photoComponent != null){
-			contentPanel.removeAll();
-			contentPanel.add((JComponent)photoComponent);
-		}
+		showPhoto(photoComponent);
+//		if ( photoComponent != null){
+//			contentPanel.removeAll();
+//			contentPanel.add((JComponent)photoComponent);
+//		}
 
 	}
 

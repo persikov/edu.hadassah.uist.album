@@ -100,7 +100,7 @@ public class PhotoAlbumModel implements IPhotoAlbumModel {
 		if ( photoComponents.isEmpty()){
 			return;
 		}
-		PhotoModel model = photoComponents.get(currPhotoIndex).getModel();
+		PhotoModel model = photoComponents.get(currPhotoIndex).getPhotoModel();
 		EnumSet<PhotoTags> selectedTags = model.getTags();
 		if ( selectedTags.contains(tag)){
 			model.removeTag(tag);
@@ -117,7 +117,7 @@ public class PhotoAlbumModel implements IPhotoAlbumModel {
 		if ( photoComponents.isEmpty()){
 			return;
 		}
-		PhotoModel model = photoComponents.get(currPhotoIndex).getModel();
+		PhotoModel model = photoComponents.get(currPhotoIndex).getPhotoModel();
 		model.removeAllRemarks();
 	}
 

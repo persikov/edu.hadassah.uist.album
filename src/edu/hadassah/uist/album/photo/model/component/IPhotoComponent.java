@@ -15,6 +15,6 @@ public interface IPhotoComponent {
 	/**
 	 * @return PhotoModel
 	 */
-	public PhotoModel getModel();
+	public PhotoModel getPhotoModel();
 
 }

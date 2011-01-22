@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 import edu.hadassah.uist.album.photo.app.component.PhotoComponent;
+import edu.hadassah.uist.album.photo.app.component.PhotoModel;
 import edu.hadassah.uist.album.photo.app.listeners.TagUIUpdaterListener;
 import edu.hadassah.uist.album.photo.model.component.IPhotoComponent;
 import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
@@ -23,10 +24,12 @@ public class PhotoComponentFactory {
 	 * @return Object
 	 * @throws IOException
 	 */
-	public IPhotoComponent createPhotoComponent(File file, IPhotoAlbumController mediator) throws IOException {
+	public IPhotoComponent createPhotoComponent(File file, IPhotoAlbumController mediator){
 		PhotoComponent photoComponent = new PhotoComponent(file, mediator);
-		photoComponent.loadPhoto();
-		photoComponent.getModel().addActionListener(new TagUIUpdaterListener(mediator));
+//		photoComponent.loadPhoto();
+		PhotoModel photoModel = photoComponent.getPhotoModel();
+		photoModel.addActionListener(new TagUIUpdaterListener(mediator));
+		photoModel.addActionListener(photoComponent);
 		return photoComponent;
 	}
 

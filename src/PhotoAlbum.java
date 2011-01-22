@@ -13,7 +13,7 @@ import edu.hadassah.uist.album.photo.model.data.IPhotoAlbumModel;
 import edu.hadassah.uist.album.photo.model.factory.IUIFactory;
 
 /**
- * Application main class
+ * Main class of PhotoAlbum application.
  * @author Itay Cohen
  * @author Sergey Persikov
  *
@@ -29,7 +29,7 @@ public class PhotoAlbum implements Runnable {
 
 
 	/**
-	 * Creates new instance of {@link PhotoAlbum}
+	 * Creates new instance of PhotoAlbum
 	 */
 	public PhotoAlbum() {
 		albumModel = new PhotoAlbumModel();
