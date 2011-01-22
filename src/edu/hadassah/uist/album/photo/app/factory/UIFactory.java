@@ -29,8 +29,8 @@ import edu.hadassah.uist.album.photo.app.listeners.ImportPhotoListener;
 import edu.hadassah.uist.album.photo.app.listeners.LigthFrameComponentListener;
 import edu.hadassah.uist.album.photo.app.listeners.NextPhotoListener;
 import edu.hadassah.uist.album.photo.app.listeners.StatusBarUpdater;
-import edu.hadassah.uist.album.photo.app.listeners.TagSetListener;
-import edu.hadassah.uist.album.photo.app.listeners.UpdateTagsListener;
+import edu.hadassah.uist.album.photo.app.listeners.TagModelUpdateListener;
+import edu.hadassah.uist.album.photo.app.listeners.TagUIUpdateListener;
 import edu.hadassah.uist.album.photo.app.utils.MessagesUtils;
 import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 import edu.hadassah.uist.album.photo.model.factory.IUIFactory;
@@ -191,10 +191,8 @@ public class UIFactory implements IUIFactory {
 	@Override
 	public JPanel createToolPanel() {
 		JPanel toolsPanel = new JPanel();
-		//toolsPanel.setBackground(Color.GRAY);
 		toolsPanel.setPreferredSize(new Dimension(180, 500));
 		toolsPanel.setLayout(new BorderLayout());
-		//		toolsPanel.setLayout(new GridLayout(5, 2, 2, 2));
 		toolsPanel.setBorder(BorderFactory.createEtchedBorder());
 
 		JPanel pageControlPanel = new JPanel(new GridLayout(1, 2, 2, 2));
@@ -214,30 +212,28 @@ public class UIFactory implements IUIFactory {
 
 		JCheckBox bTagVacation = new JCheckBox(MessagesUtils.getString(TAG_VACATION));
 		bTagVacation.addActionListener(statusUpdaterListener);
-		bTagVacation.addActionListener(new TagSetListener(mediator, PhotoTags.VACATION));
-		mediator.addActionListener(new UpdateTagsListener(bTagVacation, PhotoTags.VACATION));
+		bTagVacation.addActionListener(new TagModelUpdateListener(mediator, PhotoTags.VACATION));
+		mediator.addActionListener(new TagUIUpdateListener(bTagVacation, PhotoTags.VACATION));
 		tagControlPanel.add(bTagVacation);
 
 		JCheckBox bTagFamily = new JCheckBox(MessagesUtils.getString(TAG_FAMILY));
 		bTagFamily.addActionListener(statusUpdaterListener);
-		bTagFamily.addActionListener(new TagSetListener(mediator, PhotoTags.FAMILY));
-		mediator.addActionListener(new UpdateTagsListener(bTagFamily, PhotoTags.FAMILY));
+		bTagFamily.addActionListener(new TagModelUpdateListener(mediator, PhotoTags.FAMILY));
+		mediator.addActionListener(new TagUIUpdateListener(bTagFamily, PhotoTags.FAMILY));
 		tagControlPanel.add(bTagFamily);
 
 		JCheckBox bTagSchool = new JCheckBox(MessagesUtils.getString(TAG_SCHOOL));
 		bTagSchool.addActionListener(statusUpdaterListener);
-		bTagSchool.addActionListener(new TagSetListener(mediator, PhotoTags.SHCOOL));
-		mediator.addActionListener(new UpdateTagsListener(bTagSchool, PhotoTags.SHCOOL));
+		bTagSchool.addActionListener(new TagModelUpdateListener(mediator, PhotoTags.SHCOOL));
+		mediator.addActionListener(new TagUIUpdateListener(bTagSchool, PhotoTags.SHCOOL));
 		tagControlPanel.add(bTagSchool);
 
 		JCheckBox bTagWork = new JCheckBox(MessagesUtils.getString(TAG_WORK));
 		bTagWork.addActionListener(statusUpdaterListener);
-		bTagWork.addActionListener(new TagSetListener(mediator, PhotoTags.WORK));
-		mediator.addActionListener(new UpdateTagsListener(bTagWork, PhotoTags.WORK));
+		bTagWork.addActionListener(new TagModelUpdateListener(mediator, PhotoTags.WORK));
+		mediator.addActionListener(new TagUIUpdateListener(bTagWork, PhotoTags.WORK));
 		tagControlPanel.add(bTagWork);
-
 
 		return toolsPanel;
 	}
-
 }

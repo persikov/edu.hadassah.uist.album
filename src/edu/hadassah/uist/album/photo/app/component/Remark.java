@@ -9,12 +9,14 @@ import java.util.Deque;
 import java.util.LinkedList;
 
 /**
+ * This class represents single remark
  * @author Itay Cohen
  * @author Sergey Persikov
  *
  */
 public class Remark {
 
+	/** {@link Deque} of the {@link Point} that represent the remark */
 	private final Deque<Point> points = new LinkedList<Point>();
 
 	/**
@@ -27,20 +29,21 @@ public class Remark {
 	}
 
 	/**
-	 * @return Point
+	 * @return start {@link Point} of the remark
 	 */
 	public Point getStartPoint() {
 		return points.peekFirst();
 	}
 
 	/**
-	 * @return Object
+	 * @return all {@link Point} of the remark
 	 */
 	public Collection<Point> getPoints() {
 		return points;
 	}
 
 	/**
+	 * Add new point to the remark with given coordinates
 	 * @param x
 	 * @param y void
 	 */

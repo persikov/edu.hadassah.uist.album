@@ -14,13 +14,19 @@ import javax.swing.JComponent;
 
 import edu.hadassah.uist.album.photo.app.component.PhotoModel;
 
+/**
+ * Listener of the remarks (annotations)
+ *
+ * @author Itay Cohen
+ * @author Sergey Persikov
+ */
 public final class RemarkDrawListener extends MouseAdapter implements MouseMotionListener {
 
 	private int currentX, currentY, oldX, oldY;
 	private Color currColor = Color.BLACK;
 	private final JComponent parent;
 	private final PhotoModel photoModel;
-	private final JComponent canvas;
+	private final JComponent flippedPane;
 
 	/**
 	 * Creates new instance of {@link RemarkDrawListener}
@@ -28,11 +34,12 @@ public final class RemarkDrawListener extends MouseAdapter implements MouseMotio
 	 */
 	public RemarkDrawListener(JComponent parent, JComponent canvas, PhotoModel photoModel) {
 		this.parent = parent;
-		this.canvas = canvas;
+		this.flippedPane = canvas;
 		this.photoModel = photoModel;
 	}
 
 	/**
+	 * Starts new remark, if LMB was used
 	 * @see java.awt.event.MouseAdapter#mousePressed(java.awt.event.MouseEvent)
 	 */
 	@Override
@@ -50,12 +57,13 @@ public final class RemarkDrawListener extends MouseAdapter implements MouseMotio
 	}
 
 	/**
+	 * get graphics from the photo component
 	 * @return Graphics2D
 	 */
 	private Graphics2D getGraphics2D() {
 		Graphics2D g2d;
 		if ( photoModel.isFlipped()){
-			g2d = (Graphics2D)canvas.getGraphics();
+			g2d = (Graphics2D)flippedPane.getGraphics();
 		} else {
 			g2d = (Graphics2D)photoModel.getImage().getGraphics();
 		}
@@ -63,6 +71,7 @@ public final class RemarkDrawListener extends MouseAdapter implements MouseMotio
 	}
 
 	/**
+	 * For gesture, we need to remove it from the photo - repaint for it
 	 * @see java.awt.event.MouseAdapter#mouseReleased(java.awt.event.MouseEvent)
 	 */
 	@Override
@@ -72,6 +81,10 @@ public final class RemarkDrawListener extends MouseAdapter implements MouseMotio
 		}
 	}
 
+	/**
+	 * Paint he remark/gesture and in case it is remark mode - add new remar point
+	 * @see java.awt.event.MouseAdapter#mouseDragged(java.awt.event.MouseEvent)
+	 */
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		Graphics2D g2d = getGraphics2D();

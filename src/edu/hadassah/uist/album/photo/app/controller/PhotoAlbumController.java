@@ -30,16 +30,18 @@ import edu.hadassah.uist.album.photo.model.data.IPhotoAlbumModel;
  */
 public class PhotoAlbumController implements IPhotoAlbumController {
 
-	/**
-	 *
-	 */
 	private static final String NOTHING_TO_SHOW = "album.ui.main.window.controller.nothing.to.show";
+
+	/** album data model */
+	private final IPhotoAlbumModel albumModel;
+	/** album's UI components factory*/
+	private final PhotoComponentFactory photoComponentFactory = new PhotoComponentFactory();
+	/** listeners of the controller */
+	protected List<ActionListener> listeners = new ArrayList<ActionListener>();
 	/** application status bar */
 	private JLabel statusBar;
-	private final IPhotoAlbumModel albumModel;
-	private final PhotoComponentFactory photoComponentFactory = new PhotoComponentFactory();
+	/** album's content panel*/
 	private JComponent contentPanel;
-	protected List<ActionListener> listeners = new ArrayList<ActionListener>();
 
 	/**
 	 * Creates new instance of {@link PhotoAlbumController}
@@ -69,7 +71,6 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 	@Override
 	public void setStatusBar(final JLabel statusBar) {
 		this.statusBar = statusBar;
-
 	}
 
 	/**
@@ -91,7 +92,8 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 	}
 
 	/**
-	 * @param photoComponents void
+	 * Shows given {@link IPhotoComponent} in content panel
+	 * @param photoComponents
 	 */
 	private void showPhoto(IPhotoComponent photoComponents) {
 		if ( photoComponents == null){
@@ -123,10 +125,10 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 	}
 
 	/**
-	 * @see edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController#getMainComponent()
+	 * @see edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController#getContentPanel()
 	 */
 	@Override
-	public Component getMainComponent() {
+	public Component getContentPanel() {
 		return contentPanel;
 	}
 
@@ -138,8 +140,6 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 		IPhotoComponent photoComponent;
 		photoComponent = photoComponentFactory.createPhotoComponent(file, this);
 		albumModel.addPhotoComponent(photoComponent);
-//		contentPanel.removeAll();
-//		contentPanel.add((JComponent)photoComponent);
 		showPhoto(photoComponent);
 	}
 
@@ -166,11 +166,6 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 			albumModel.addPhotoComponent(photoComponent);
 		}
 		showPhoto(photoComponent);
-//		if ( photoComponent != null){
-//			contentPanel.removeAll();
-//			contentPanel.add((JComponent)photoComponent);
-//		}
-
 	}
 
 	/**
@@ -182,10 +177,11 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 	}
 
 	/**
-	 * @see edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController#setSelectedTags(java.util.EnumSet)
+	 * Raise event to the listeners that tag was selected
+	 * @see edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController#updateUISelectedTags(java.util.EnumSet)
 	 */
 	@Override
-	public void setSelectedTags(EnumSet<PhotoTags> tags) {
+	public void updateUISelectedTags(EnumSet<PhotoTags> tags) {
 		for (PhotoTags currTag : PhotoTags.values()) {
 			if (tags.contains(currTag) ){
 				raiseActionEvent("true", currTag.ordinal());
@@ -195,12 +191,21 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 		}
 	}
 
+	/**
+	 * Fire event to all registered listeners
+	 * @param command
+	 * @param eventId
+	 */
 	protected void raiseActionEvent(String command, int eventId){
+		ActionEvent event = new ActionEvent(this, eventId, command);
 		for (ActionListener l : listeners) {
-			l.actionPerformed(new ActionEvent(this, eventId, command));
+			l.actionPerformed(event);
 		}
 	}
 
+	/**
+	 * @see edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController#addActionListener(java.awt.event.ActionListener)
+	 */
 	@Override
 	public void addActionListener(ActionListener listener){
 		if (listeners.contains(listener)) {
@@ -209,6 +214,9 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 		listeners.add(listener);
 	}
 
+	/**
+	 * @see edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController#removeActionListener(java.awt.event.ActionListener)
+	 */
 	@Override
 	public void removeActionListener(ActionListener listener){
 		if (!listeners.contains(listener)) {
@@ -218,10 +226,10 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 	}
 
 	/**
-	 * @see edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController#removeCurrentAnnotations()
+	 * @see edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController#removeRemarks()
 	 */
 	@Override
-	public void removeCurrentAnnotations() {
+	public void removeRemarks() {
 		albumModel.removeCurrentAnnotations();
 	}
 

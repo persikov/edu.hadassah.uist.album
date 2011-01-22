@@ -13,6 +13,7 @@ import edu.hadassah.uist.album.photo.app.utils.MouseGesturesRecognizer;
 import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 
 /**
+ * Listener of the mouse gestures
  * @author Itay Cohen
  * @author Sergey Persikov
  *
@@ -29,10 +30,14 @@ public class MouseGestureListener extends MouseAdapter implements
 	private static final Pattern SHCOOL_TAG_PATTERN = Pattern.compile("[LAE]+[CDR]+[LAE]+");
 	private static final Pattern FAMILY_TAG_PATTERN = Pattern.compile("[U]+[B]*[R]+");
 
+	/**	utility for  gesture recognition */
 	private final MouseGesturesRecognizer gesturesRecognizer = new MouseGesturesRecognizer();
-	private boolean isGesture;
 
+	/** application UI controller */
 	private final IPhotoAlbumController mediator;
+	/** indicate if curent mouse action is gestire */
+	private boolean isGesture;
+	/** indicate if clear annotation (remark) action should be recognized */
 	private boolean enableClearAnnotations = true;
 
 
@@ -54,6 +59,8 @@ public class MouseGestureListener extends MouseAdapter implements
 		this.mediator = mediator;
 	}
 	/**
+	 * On release event this method tries to recognize gesture using patterns,
+	 * and perform corresponding operation
 	 * @see java.awt.event.MouseAdapter#mouseReleased(java.awt.event.MouseEvent)
 	 */
 	@Override
@@ -77,7 +84,7 @@ public class MouseGestureListener extends MouseAdapter implements
 				mediator.toggleCurrentComponentTag(PhotoTags.FAMILY);
 				System.out.println("tag family");
 			} else if (enableClearAnnotations && DELETE_ANNOTATION_PATTERN.matcher(gesture).matches()){
-				mediator.removeCurrentAnnotations();
+				mediator.removeRemarks();
 				System.out.println("clear annotation");
 			} else if (NEXT_PHOTO_PATTERN.matcher(gesture).matches()){
 				mediator.showNextPhoto();
@@ -89,7 +96,9 @@ public class MouseGestureListener extends MouseAdapter implements
 			gesturesRecognizer.clearTemporaryInfo();
 		}
 	}
+
 	/**
+	 * Set state - is the curent mouse action is gesture
 	 * @see java.awt.event.MouseAdapter#mousePressed(java.awt.event.MouseEvent)
 	 */
 	@Override
@@ -97,6 +106,10 @@ public class MouseGestureListener extends MouseAdapter implements
 		isGesture = (e.getButton() == MouseEvent.BUTTON3);
 	}
 
+	/**
+	 * Pass current event to gesture recognizer
+	 * @see java.awt.event.MouseAdapter#mouseDragged(java.awt.event.MouseEvent)
+	 */
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		if (isGesture){

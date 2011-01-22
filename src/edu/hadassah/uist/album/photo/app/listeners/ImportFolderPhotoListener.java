@@ -13,6 +13,7 @@ import edu.hadassah.uist.album.photo.app.utils.MessagesUtils;
 import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 
 /**
+ * Listener class for import folder operation
  * @author Itay Cohen
  * @author Sergey Persikov
  *
@@ -27,6 +28,9 @@ public class ImportFolderPhotoListener extends AImportPhotoListener {
 		super(mediator);
 	}
 
+	/**
+	 * @see edu.hadassah.uist.album.photo.app.listeners.AImportPhotoListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		FC.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -42,6 +46,7 @@ public class ImportFolderPhotoListener extends AImportPhotoListener {
 	}
 
 	/**
+	 * Load list of files
 	 * @see java.lang.Runnable#run()
 	 */
 	@Override

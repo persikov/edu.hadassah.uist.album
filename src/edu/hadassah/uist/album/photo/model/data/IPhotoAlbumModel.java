@@ -9,9 +9,9 @@ import edu.hadassah.uist.album.photo.app.component.PhotoTags;
 import edu.hadassah.uist.album.photo.model.component.IPhotoComponent;
 
 /**
+ *
  * @author Itay Cohen
  * @author Sergey Persikov
- *
  */
 public interface IPhotoAlbumModel {
 

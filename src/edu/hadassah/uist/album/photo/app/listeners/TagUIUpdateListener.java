@@ -9,24 +9,26 @@ import java.awt.event.ActionListener;
 import javax.swing.AbstractButton;
 
 import edu.hadassah.uist.album.photo.app.component.PhotoTags;
+import edu.hadassah.uist.album.photo.model.component.IPhotoComponent;
 
 /**
+ * Update UI with selected tags of the {@link IPhotoComponent}
+ *
  * @author Itay Cohen
  * @author Sergey Persikov
- *
  */
-public class UpdateTagsListener implements ActionListener {
+public class TagUIUpdateListener implements ActionListener {
 
 
 	private final AbstractButton button;
 	private final PhotoTags tag;
 
 	/**
-	 * Creates new instance of {@link UpdateTagsListener}
+	 * Creates new instance of {@link TagUIUpdateListener}
 	 * @param tags
 	 * @param bTagVacation
 	 */
-	public UpdateTagsListener(AbstractButton button, PhotoTags tag) {
+	public TagUIUpdateListener(AbstractButton button, PhotoTags tag) {
 		this.button = button;
 		this.tag = tag;
 	}

@@ -8,6 +8,7 @@ import edu.hadassah.uist.album.photo.app.utils.MessagesUtils;
 import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 
 /**
+ * Listener class for import single file
  * @author Itay Cohen
  * @author Sergey Persikov
  *
@@ -21,6 +22,9 @@ public class ImportPhotoListener extends AImportPhotoListener  {
 		super(mediator);
 	}
 
+	/**
+	 * @see edu.hadassah.uist.album.photo.app.listeners.AImportPhotoListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		FC.setFileSelectionMode(JFileChooser.FILES_ONLY);

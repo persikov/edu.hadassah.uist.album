@@ -11,9 +11,11 @@ import javax.swing.SwingUtilities;
 import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 
 /**
+ * This listener shows next or previous photo component according to pressed button,
+ * or recognized gesture
+ *
  * @author Itay Cohen
  * @author Sergey Persikov
- *
  */
 public class NextPhotoListener implements ActionListener, Runnable {
 

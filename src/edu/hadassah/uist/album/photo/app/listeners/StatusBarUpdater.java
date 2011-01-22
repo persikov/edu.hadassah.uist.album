@@ -8,10 +8,10 @@ import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 
 
 /**
+ * Listener for updates of the status bar
  *
  * @author Itay Cohen
  * @author Sergey Persikov
- *
  */
 public class StatusBarUpdater implements ActionListener {
 

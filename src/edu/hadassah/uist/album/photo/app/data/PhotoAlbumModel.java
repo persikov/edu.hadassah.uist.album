@@ -14,14 +14,16 @@ import edu.hadassah.uist.album.photo.model.component.IPhotoComponent;
 import edu.hadassah.uist.album.photo.model.data.IPhotoAlbumModel;
 
 /**
+ * Model of the Photo Album application
  * @author Itay Cohen
  * @author Sergey Persikov
  *
  */
 public class PhotoAlbumModel implements IPhotoAlbumModel {
 
+	/** Collections of the {@link IPhotoComponent} loaded to application */
 	private final List<IPhotoComponent> photoComponents = new ArrayList<IPhotoComponent>();
-
+	/** index of the current photo */
 	private int currPhotoIndex = 0;
 
 
@@ -32,7 +34,7 @@ public class PhotoAlbumModel implements IPhotoAlbumModel {
 	public IPhotoComponent getNextPhotoComponents() {
 		IPhotoComponent next = null;
 		if ( photoComponents.isEmpty()){
-			return null;//TODO return null object
+			return null;//TODO return null object instead of null
 		}
 		currPhotoIndex = mod(currPhotoIndex + 1, photoComponents.size());
 		next = photoComponents.get(currPhotoIndex);
@@ -46,7 +48,7 @@ public class PhotoAlbumModel implements IPhotoAlbumModel {
 	public IPhotoComponent getPreviousPhotoComponents() {
 		IPhotoComponent prev = null;
 		if ( photoComponents.isEmpty()){
-			return null;//TODO return null object
+			return null;//TODO return null object instead of null
 		}
 		currPhotoIndex = mod(currPhotoIndex - 1, photoComponents.size());
 		prev = photoComponents.get(currPhotoIndex);
@@ -71,22 +73,25 @@ public class PhotoAlbumModel implements IPhotoAlbumModel {
 	@Override
 	public Component removeCurrentComponent() {
 		if ( photoComponents.isEmpty()){
-			return null;//TODO return null object
+			return null;//TODO return null object instead of null
 		}
 		Component removed = (Component)photoComponents.remove(currPhotoIndex);
 		currPhotoIndex = mod(currPhotoIndex - 1, photoComponents.size());
 		return removed;
 	}
 
-	private static int mod(int x, int y)
-	{
+
+	/**
+	 * @param x
+	 * @param y
+	 * @return mathematically correct x mod y
+	 */
+	private static int mod(int x, int y){
 		if (y == 0){
 			return 0;
 		}
-
 	    int result = x % y;
-	    if (result < 0)
-	    {
+	    if (result < 0){
 	        result += y;
 	    }
 	    return result;

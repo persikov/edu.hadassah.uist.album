@@ -6,37 +6,28 @@ package edu.hadassah.uist.album.photo.app.listeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
+import edu.hadassah.uist.album.photo.model.component.IPhotoComponent;
 import edu.hadassah.uist.album.photo.model.component.ITagable;
 import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 
 /**
+ * Update mediator with selected tags of the {@link IPhotoComponent}
+ *
  * @author Itay Cohen
  * @author Sergey Persikov
- *
  */
-public class TagUIUpdaterListener implements ActionListener, ChangeListener {
+public class TagMediatorUpdaterListener implements ActionListener{
 
 	private final IPhotoAlbumController mediator;
 
 	/**
-	 * Creates new instance of {@link TagUIUpdaterListener}
+	 * Creates new instance of {@link TagMediatorUpdaterListener}
 	 * @param mediator
 	 */
-	public TagUIUpdaterListener(IPhotoAlbumController mediator) {
+	public TagMediatorUpdaterListener(IPhotoAlbumController mediator) {
 		this.mediator = mediator;
 	}
 
-	/**
-	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
-	 */
-	@Override
-	public void stateChanged(ChangeEvent e) {
-		// TODO Auto-generated method stub
-
-	}
 
 	/**
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
@@ -46,7 +37,7 @@ public class TagUIUpdaterListener implements ActionListener, ChangeListener {
 		Object source = e.getSource();
 		if (source instanceof ITagable){
 			ITagable photoModel = (ITagable)source;
-			mediator.setSelectedTags(photoModel.getTags());
+			mediator.updateUISelectedTags(photoModel.getTags());
 		}
 
 	}

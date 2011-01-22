@@ -12,24 +12,29 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 
 import edu.hadassah.uist.album.photo.app.component.PhotoTags;
+import edu.hadassah.uist.album.photo.model.component.IPhotoComponent;
 
 
 /**
- * @author persikov
+ * Interface application UI mediator (controller) for cross component actions
  *
+ * @author Itay Cohen
+ * @author Sergey Persikov
  */
 public interface IPhotoAlbumController {
 
 	/**
+	 * show next photo
 	 */
 	public void showNextPhoto();
 
 	/**
+	 * shows previous photo
 	 */
 	public void showPreviousPhoto();
 
 	/**
-	 * update application status bar
+	 * updates application status bar
 	 */
 	public void setStatusMessage(String message);
 
@@ -40,38 +45,60 @@ public interface IPhotoAlbumController {
 	public void setStatusBar(JLabel statusBar);
 
 	/**
-	 * @param contentPanel void
+	 * Set application content panel
+	 * @param contentPanel
 	 */
 	public void setContentPanel(JComponent contentPanel);
 
-	public Component getMainComponent();
+	/**
+	 * @return pplication content panel
+	 */
+	public Component getContentPanel();
 
 	/**
-	 * @param file void
+	 * Creates and add new {@link IPhotoComponent} to the application and UI
+	 * @param file image file
 	 */
 	public void addPhotoComponent(File file);
 
+	/**
+	 * Creates and add new {@link IPhotoComponent} to the application and UI
+	 * @param files image files
+	 */
 	public void addPhotoComponents(File[] files);
 
+	/**
+	 *  remove current {@link IPhotoComponent} from the application model and IU
+	 */
 	public void removeCurrentComponent();
 
 	/**
-	 * @param tag void
+	 * Add/remove component's tag to the component model
+	 * @param tag
 	 */
 	public void toggleCurrentComponentTag(PhotoTags tag);
 
 	/**
-	 * @param tags void
+	 * update UI with set of tags
+	 * @param tags
 	 */
-	public void setSelectedTags(EnumSet<PhotoTags> tags);
+	public void updateUISelectedTags(EnumSet<PhotoTags> tags);
 
+	/**
+	 * remove listener from the mediator
+	 * @param listener
+	 */
 	public abstract void removeActionListener(ActionListener listener);
 
+	/**
+	 * add listener to the mediator
+	 * @param listener
+	 */
 	public abstract void addActionListener(ActionListener listener);
 
 	/**
-	 *  void
+	 *  remove annotations (remarks) from the currentlu shown component
 	 */
-	public void removeCurrentAnnotations();
+	public void removeRemarks();
 
 }

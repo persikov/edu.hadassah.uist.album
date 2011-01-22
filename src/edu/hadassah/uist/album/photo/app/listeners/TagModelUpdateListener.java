@@ -10,21 +10,22 @@ import edu.hadassah.uist.album.photo.app.component.PhotoTags;
 import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 
 /**
+ * Listener to update {@link IPhotoModel} with selected tag
  * @author Itay Cohen
  * @author Sergey Persikov
  *
  */
-public class TagSetListener implements ActionListener {
+public class TagModelUpdateListener implements ActionListener {
 
 	/** UI mediator for cross components interaction */
 	private final IPhotoAlbumController mediator;
 	private final PhotoTags tag;
 
 	/**
-	 * Creates new instance of {@link TagSetListener}
+	 * Creates new instance of {@link TagModelUpdateListener}
 	 * @param mediator
 	 */
-	public TagSetListener(IPhotoAlbumController mediator, PhotoTags tag) {
+	public TagModelUpdateListener(IPhotoAlbumController mediator, PhotoTags tag) {
 		super();
 		this.mediator = mediator;
 		this.tag = tag;

@@ -9,18 +9,19 @@ import java.util.regex.Pattern;
 import edu.hadassah.uist.album.photo.app.utils.MessagesUtils;
 
 /**
+ * Filter of the file extensions for import file dialog
+ *
  * @author Itay Cohen
  * @author Sergey Persikov
- *
  */
 public final class PhotoFileFilter extends javax.swing.filechooser.FileFilter implements FilenameFilter, FileFilter {
 
-	private static Pattern graphFiles = Pattern.compile("" + 
-			".*\\.bmp|" + 
-			".*\\.png|" + 
-			".*\\.jpg|" + 
-			".*\\.jpeg|" + 
-			".*\\.png"); 
+	private static Pattern graphFiles = Pattern.compile("" +
+			".*\\.bmp|" +
+			".*\\.png|" +
+			".*\\.jpg|" +
+			".*\\.jpeg|" +
+			".*\\.png");
 	@Override
 	public boolean accept(File dir, String name) {
 		Matcher matcher = graphFiles.matcher(name.toLowerCase());
