@@ -99,6 +99,7 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 		if ( photoComponents == null){
 			setStatusMessage(MessagesUtils.getString(NOTHING_TO_SHOW));
 			contentPanel.removeAll();
+			updateUISelectedTags(EnumSet.noneOf(PhotoTags.class));
 			contentPanel.repaint();
 		} else {
 			contentPanel.removeAll();
@@ -114,6 +115,14 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 		}
 	}
 
+
+	/**
+	 * refreshes ui
+	 */
+	@Override
+	public void refreshUI(){
+		contentPanel.repaint();
+	}
 
 	/**
 	 * @see edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController#setContentPanel(javax.swing.JComponent)

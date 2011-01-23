@@ -82,8 +82,9 @@ public class PhotoComponent extends JComponent implements IPhotoComponent, Actio
 	@Override
 	public void paintComponent(Graphics graphics){
 		Graphics2D g2d = (Graphics2D) graphics;
+		Dimension dimension = new Dimension(photoModel.getImage().getWidth(flippedPane), photoModel.getImage().getHeight(flippedPane));
 
-		paintBackground(g2d, photoModel);
+		paintBackground(g2d, dimension);
 		if (photoModel.isFlipped()){
 			paintRemarks(g2d, photoModel);
 			flippedPane.setVisible(true);
@@ -97,24 +98,36 @@ public class PhotoComponent extends JComponent implements IPhotoComponent, Actio
 	/**
 	 * Paints background of the photo
 	 * @param g2d {@link Graphics2D}
-	 * @param model {@link PhotoModel}
+	 * @param dimension
 	 */
-	private void paintBackground(Graphics2D g2d, PhotoModel model){
-		Dimension dimension = new Dimension(model.getImage().getWidth(flippedPane), model.getImage().getHeight(flippedPane));
+	private void paintBackground(Graphics2D g2d, Dimension dimension){
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.fillRoundRect(10, 10, dimension.width+20, dimension.height+20, 20, 20);
+		paintBorders(g2d, dimension);
+	}
+
+
+	/**
+	 * @param g2d
+	 * @param dimension
+	 */
+	private void paintBorders(Graphics2D g2d, Dimension dimension) {
 		g2d.setColor(Color.BLACK);
 		g2d.drawRoundRect(10, 10, dimension.width+20, dimension.height+20, 20, 20);
-
-
 	}
 	/**
 	 * Paints remarks (annotations) of the photo
 	 * @param g2d {@link Graphics2D}
 	 */
 	private void paintRemarks(Graphics2D g2d, PhotoModel model) {
+//		AffineTransform savedTransform = g2d.getTransform();
+//		Color savedColor = g2d.getColor();
+//		Stroke savedStroke = g2d.getStroke();
+//
+//		AffineTransform affineTransform = new AffineTransform();
+//		affineTransform.translate(20, 20);
+//		g2d.setTransform(affineTransform);
 		Point oldPoint = null;
-
 		g2d.setColor(Color.BLACK);
 		g2d.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 		for (Remark currRemark : model.getAllRemarks()) {
@@ -127,6 +140,10 @@ public class PhotoComponent extends JComponent implements IPhotoComponent, Actio
 				}
 			}
 		}
+//		g2d.setTransform(savedTransform);
+//		g2d.setColor(savedColor);
+//		g2d.setStroke(savedStroke);
+
 	}
 
 	/**

@@ -22,19 +22,24 @@ import edu.hadassah.uist.album.photo.app.component.PhotoModel;
  */
 public final class RemarkDrawListener extends MouseAdapter implements MouseMotionListener {
 
+	/**  */
+	private static final int COORDINATES_FIX = 20;
 	private int currentX, currentY, oldX, oldY;
 	private Color currColor = Color.BLACK;
 	private final JComponent parent;
 	private final PhotoModel photoModel;
 	private final JComponent flippedPane;
+	boolean isRemark = true;
 
 	/**
 	 * Creates new instance of {@link RemarkDrawListener}
-	 * @param photoComponent
+	 * @param parent
+	 * @param flippedPane
+	 * @param photoModel
 	 */
-	public RemarkDrawListener(JComponent parent, JComponent canvas, PhotoModel photoModel) {
+	public RemarkDrawListener(JComponent parent, JComponent flippedPane, PhotoModel photoModel) {
 		this.parent = parent;
-		this.flippedPane = canvas;
+		this.flippedPane = flippedPane;
 		this.photoModel = photoModel;
 	}
 
@@ -50,9 +55,11 @@ public final class RemarkDrawListener extends MouseAdapter implements MouseMotio
 		g2d.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 		if (e.getButton() == MouseEvent.BUTTON3){
 			currColor=Color.RED;
+			isRemark = false;
 		} else {
-			photoModel.startNewRemark(oldX, oldY);
+			photoModel.startNewRemark(oldX+COORDINATES_FIX, oldY+COORDINATES_FIX);
 			currColor=Color.BLACK;
+			isRemark = true;
 		}
 	}
 
@@ -76,7 +83,7 @@ public final class RemarkDrawListener extends MouseAdapter implements MouseMotio
 	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if (currColor == Color.RED){
+		if (!isRemark){
 			parent.repaint();
 		}
 	}
@@ -96,9 +103,23 @@ public final class RemarkDrawListener extends MouseAdapter implements MouseMotio
 		//			graphics2d.dispose();
 		oldX = currentX;
 		oldY = currentY;
-		if (currColor == Color.BLACK){
-			photoModel.addRemarkPoint(currentX, currentY);
+		if (isRemark){
+			photoModel.addRemarkPoint(currentX+COORDINATES_FIX, currentY+COORDINATES_FIX);
 		}
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		oldX = e.getX();
+		oldY = e.getY();
+		isRemark = currColor == Color.BLACK;
+		if (isRemark){
+			photoModel.startNewRemark(oldX+COORDINATES_FIX, oldY+COORDINATES_FIX);
+		}
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		isRemark = false;
 	}
 
 }

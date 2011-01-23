@@ -19,7 +19,7 @@ public final class ComponentVisibilityToggleAction extends AbstractAction {
 	/**
 	 * Creates new instance of {@link ComponentVisibilityToggleAction}
 	 * @param name
-	 * @param menuItem
+	 * @param component
 	 */
 	public ComponentVisibilityToggleAction(final String name, final Component component) {
 		super(name);

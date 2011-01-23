@@ -101,4 +101,9 @@ public interface IPhotoAlbumController {
 	 */
 	public void removeRemarks();
 
+	/**
+	 *  refreshes content panel UI
+	 */
+	public void refreshUI();
+
 }

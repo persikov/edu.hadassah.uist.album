@@ -193,7 +193,7 @@ public class PhotoModel implements ITagable {
 	}
 
 	/**
-	 * @returns the image File
+	 * @return the image File
 	 */
 	public File getFile() {
 		return file;

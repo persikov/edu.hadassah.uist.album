@@ -3,12 +3,17 @@
  */
 package edu.hadassah.uist.album.photo.app.listeners;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.regex.Pattern;
 
 import edu.hadassah.uist.album.photo.app.component.PhotoTags;
+import edu.hadassah.uist.album.photo.app.utils.MessagesUtils;
 import edu.hadassah.uist.album.photo.app.utils.MouseGesturesRecognizer;
 import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 
@@ -39,6 +44,7 @@ public class MouseGestureListener extends MouseAdapter implements
 	private boolean isGesture;
 	/** indicate if clear annotation (remark) action should be recognized */
 	private boolean enableClearAnnotations = true;
+	private int currentX, currentY, oldX, oldY;
 
 
 	/**
@@ -69,30 +75,33 @@ public class MouseGestureListener extends MouseAdapter implements
 			String gesture = gesturesRecognizer.getGesture();
 			System.out.println(gesture);
 			if (DELETE_PATTERN.matcher(gesture).matches()){
-				System.out.println("delete");
 				mediator.removeCurrentComponent();
+				mediator.setStatusMessage(MessagesUtils.getString("album.message.gesture.recognized.delete"));
 			} else if (WORK_TAG_PATTERN.matcher(gesture).matches()){
 				mediator.toggleCurrentComponentTag(PhotoTags.WORK);
-				System.out.println("tag work");
+				mediator.setStatusMessage(MessagesUtils.getString("album.message.gesture.recognized.tag.work"));
 			} else if (VACATION_TAG_PATTERN.matcher(gesture).matches()){
 				mediator.toggleCurrentComponentTag(PhotoTags.VACATION);
-				System.out.println("tag vacation");
+				mediator.setStatusMessage(MessagesUtils.getString("album.message.gesture.recognized.tag.vacation"));
 			} else if (SHCOOL_TAG_PATTERN.matcher(gesture).matches()){
 				mediator.toggleCurrentComponentTag(PhotoTags.SHCOOL);
-				System.out.println("tag school");
+				mediator.setStatusMessage(MessagesUtils.getString("album.message.gesture.recognized.tag.school"));
 			} else if (FAMILY_TAG_PATTERN.matcher(gesture).matches()){
 				mediator.toggleCurrentComponentTag(PhotoTags.FAMILY);
-				System.out.println("tag family");
+				mediator.setStatusMessage(MessagesUtils.getString("album.message.gesture.recognized.tag.family"));
 			} else if (enableClearAnnotations && DELETE_ANNOTATION_PATTERN.matcher(gesture).matches()){
 				mediator.removeRemarks();
-				System.out.println("clear annotation");
+				mediator.setStatusMessage(MessagesUtils.getString("album.message.gesture.recognized.remark.clear"));
 			} else if (NEXT_PHOTO_PATTERN.matcher(gesture).matches()){
 				mediator.showNextPhoto();
-				System.out.println("next");
+				mediator.setStatusMessage(MessagesUtils.getString("album.message.gesture.recognized.photo.next"));
 			} else if (PREV_PHOTO_PATTERN.matcher(gesture).matches()){
 				mediator.showPreviousPhoto();
-				System.out.println("prev");
+				mediator.setStatusMessage(MessagesUtils.getString("album.message.gesture.recognized.photo.prev"));
+			} else {
+				mediator.setStatusMessage(MessagesUtils.getString("album.message.gesture.not.recognized"));
 			}
+			mediator.refreshUI();
 			gesturesRecognizer.clearTemporaryInfo();
 		}
 	}
@@ -104,6 +113,8 @@ public class MouseGestureListener extends MouseAdapter implements
 	@Override
 	public void mousePressed(MouseEvent e) {
 		isGesture = (e.getButton() == MouseEvent.BUTTON3);
+		oldX = e.getX();
+		oldY = e.getY();
 	}
 
 	/**
@@ -114,6 +125,19 @@ public class MouseGestureListener extends MouseAdapter implements
 	public void mouseDragged(MouseEvent e) {
 		if (isGesture){
 			gesturesRecognizer.processMouseEvent(e);
+			Component component = e.getComponent();
+			if (component != null){
+				Graphics2D g2d = (Graphics2D)component.getGraphics();
+				g2d.setColor(Color.RED);
+				g2d.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+				currentX = e.getX();
+				currentY = e.getY();
+				g2d.drawLine(oldX, oldY, currentX, currentY);
+				//			graphics2d.dispose();
+				oldX = currentX;
+				oldY = currentY;
+			}
+
 		}
 	}
 

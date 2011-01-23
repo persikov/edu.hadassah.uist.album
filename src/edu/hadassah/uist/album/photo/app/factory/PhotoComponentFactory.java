@@ -22,7 +22,7 @@ public class PhotoComponentFactory {
 	 * Creates new {@link IPhotoComponent}
 	 * @param file image file
 	 * @param mediator application UI controller
-	 * @return
+	 * @return new {@link IPhotoComponent}
 	 */
 	public IPhotoComponent createPhotoComponent(File file, IPhotoAlbumController mediator){
 		PhotoComponent photoComponent = new PhotoComponent(file, mediator);

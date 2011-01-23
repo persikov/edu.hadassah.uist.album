@@ -20,7 +20,6 @@ public class StatusBarUpdater implements ActionListener {
 
 	/**
 	 * Creates new instance of {@link StatusBarUpdater}
-	 * @param name
 	 * @param mediator
 	 */
 	public StatusBarUpdater(final IPhotoAlbumController mediator) {

@@ -16,7 +16,7 @@ import edu.hadassah.uist.album.photo.model.controller.IPhotoAlbumController;
 public class ImportPhotoListener extends AImportPhotoListener  {
 	/**
 	 * Creates new instance of {@link ImportPhotoListener}
-	 * @param uiFactory
+	 * @param mediator
 	 */
 	public ImportPhotoListener(IPhotoAlbumController mediator) {
 		super(mediator);

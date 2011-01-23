@@ -25,8 +25,8 @@ public class TagUIUpdateListener implements ActionListener {
 
 	/**
 	 * Creates new instance of {@link TagUIUpdateListener}
-	 * @param tags
-	 * @param bTagVacation
+	 * @param tag
+	 * @param button
 	 */
 	public TagUIUpdateListener(AbstractButton button, PhotoTags tag) {
 		this.button = button;

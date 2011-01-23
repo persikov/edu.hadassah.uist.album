@@ -68,7 +68,6 @@ public class UIFactory implements IUIFactory {
 	/**
 	 * Creates new instance of {@link UIFactory}
 	 * @param mediator
-	 * @param statusUpdaterListener
 	 */
 	public UIFactory(final IPhotoAlbumController mediator) {
 		this.mediator = mediator;
@@ -82,9 +81,7 @@ public class UIFactory implements IUIFactory {
 	@Override
 	public JPanel createContentPanel() {
 		JPanel cPanel = new JPanel();
-		cPanel.setBackground(Color.CYAN);
 		cPanel.setLayout(new BorderLayout());
-		//cPanel.setBorder(BorderFactory.createCompoundBorder());
 		cPanel.setBorder(BorderFactory.createEtchedBorder());
 		return cPanel;
 	}
@@ -153,14 +150,12 @@ public class UIFactory implements IUIFactory {
 	 */
 	@Override
 	public JMenuBar createMenuBar() {
-		//Create the menu bar.  Make it have a green background.
-		JMenuBar greenMenuBar = new JMenuBar();
-		greenMenuBar.setOpaque(true);
-		greenMenuBar.setBackground(new Color(154, 165, 127));
-		greenMenuBar.setPreferredSize(new Dimension(200, 20));
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setOpaque(true);
+		menuBar.setPreferredSize(new Dimension(200, 20));
 
 
-		greenMenuBar.add(createFileMenu());
+		menuBar.add(createFileMenu());
 
 		JFrame frame = new JFrame(MessagesUtils.getString(TOOL_FRAME_TITLE));
 		frame.setPreferredSize(new Dimension(300, 400));
@@ -172,10 +167,10 @@ public class UIFactory implements IUIFactory {
 		JMenu viewMenu = new JMenu(MessagesUtils.getString(MENU_TITLE_VIEW));
 		final JMenuItem menuItem = new JMenuItem(new ComponentVisibilityToggleAction(MessagesUtils.getString(MENU_TITLE_TOOL_FRAME_SHOW), frame));
 		viewMenu.add(menuItem);
-		greenMenuBar.add(viewMenu);
+		menuBar.add(viewMenu);
 
 		frame.addComponentListener(new LigthFrameComponentListener(menuItem));
-		return greenMenuBar;
+		return menuBar;
 	}
 	/**
 	 * @see edu.hadassah.uist.album.photo.model.factory.IUIFactory#createStatusBar()

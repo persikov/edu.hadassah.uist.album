@@ -1,0 +1,12 @@
+
+edu.hadassah.uist.album.photo.app.actions
+edu.hadassah.uist.album.photo.app.component
+edu.hadassah.uist.album.photo.app.controller
+edu.hadassah.uist.album.photo.app.data
+edu.hadassah.uist.album.photo.app.factory
+edu.hadassah.uist.album.photo.app.listeners
+edu.hadassah.uist.album.photo.app.utils
+edu.hadassah.uist.album.photo.model.component
+edu.hadassah.uist.album.photo.model.controller
+edu.hadassah.uist.album.photo.model.data
+edu.hadassah.uist.album.photo.model.factory

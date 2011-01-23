@@ -29,8 +29,8 @@ public class Remarks {
 
 	/**
 	 * Add new point to the remark with given coordinates
-	 * @param currentX
-	 * @param currentY void
+	 * @param x
+	 * @param y
 	 */
 	public void addPoint(int x, int y) {
 		remarks.peekLast().addPoint(x,y);
