@@ -9,34 +9,45 @@ import edu.hadassah.uist.album.photo.app.component.PhotoTags;
 import edu.hadassah.uist.album.photo.model.component.IPhotoComponent;
 
 /**
- *
+ * Interface of the album model class
  * @author Itay Cohen
  * @author Sergey Persikov
  */
 public interface IPhotoAlbumModel {
 
 	/**
-	 * @return IPhotoComponent
+	 * @return next {@link IPhotoComponent}
 	 */
 	public IPhotoComponent getNextPhotoComponents();
 
 	/**
-	 * @return IPhotoComponent
+	 * @return previous {@link IPhotoComponent}
 	 */
 	public IPhotoComponent getPreviousPhotoComponents();
 
+	/**
+	 * Add new component to the nodel
+	 * @param photoComponent component to add
+	 * @return <code>true</code> in case the component were successfully added
+	 * <code>false</code> otherwise
+	 */
 	public boolean addPhotoComponent(IPhotoComponent photoComponent);
 
+	/**
+	 * Remove current component and returns it
+	 * @return removed component
+	 */
 	public Component removeCurrentComponent();
 
 	/**
-	 * @param tag void
+	 * Add/remove component's tag to the component model
+	 * @param tag tag to toggle
 	 */
 	public void toggleCurrentComponentTag(PhotoTags tag);
 
 	/**
-	 * @return Component
+	 * remove all remarks of the current component
 	 */
-	public void removeCurrentAnnotations();
+	public void removeComponentRemarks();
 
 }

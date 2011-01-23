@@ -11,45 +11,45 @@ import javax.swing.JPanel;
 
 
 /**
+ * Factory of album's UI components
  * @author Itay Cohen
  * @author Sergey Persikov
- *
  */
 public interface IUIFactory {
 
 	/**
 	 * Creates file menu
-	 * @return
+	 * @return file menu
 	 */
 	public JMenu createFileMenu();
 
 	/**
 	 * Creates tool panel
-	 * @return
+	 * @return tool panel
 	 */
 	public JPanel createToolPanel();
 
 	/**
 	 * Creates menu bar
-	 * @return
+	 * @return application menu bar
 	 */
 	public JMenuBar createMenuBar();
 
 	/**
 	 * Creates application main frame
-	 * @return
+	 * @return application main frame
 	 */
 	public JFrame createMainFrame();
 
 	/**
 	 * Creates application status bar
-	 * @return
+	 * @return application status bar
 	 */
 	public JLabel createStatusBar();
 
 	/**
 	 * Creates application main panel
-	 * @return
+	 * @return application main panel
 	 */
 	public JPanel createMainPanel();
 

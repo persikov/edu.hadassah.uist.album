@@ -115,10 +115,10 @@ public class PhotoAlbumModel implements IPhotoAlbumModel {
 	}
 
 	/**
-	 * @see edu.hadassah.uist.album.photo.model.data.IPhotoAlbumModel#removeCurrentAnnotations()
+	 * @see edu.hadassah.uist.album.photo.model.data.IPhotoAlbumModel#removeComponentRemarks()
 	 */
 	@Override
-	public void removeCurrentAnnotations() {
+	public void removeComponentRemarks() {
 		if ( photoComponents.isEmpty()){
 			return;
 		}

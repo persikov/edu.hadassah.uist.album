@@ -230,7 +230,7 @@ public class PhotoAlbumController implements IPhotoAlbumController {
 	 */
 	@Override
 	public void removeRemarks() {
-		albumModel.removeCurrentAnnotations();
+		albumModel.removeComponentRemarks();
 	}
 
 }
